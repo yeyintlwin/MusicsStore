@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
-import com.yeyintlwin.musicsstore.ui.base.BaseActivity;
+import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
 
 @SuppressLint("Registered")
 public class SplashActivity extends BaseActivity {

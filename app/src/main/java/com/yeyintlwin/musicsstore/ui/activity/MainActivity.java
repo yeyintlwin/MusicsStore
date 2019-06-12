@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.yeyintlwin.musicsstore.R;
-import com.yeyintlwin.musicsstore.ui.base.BaseActivity;
+import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
