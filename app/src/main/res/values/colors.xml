@@ -3,4 +3,24 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="colorControlHighlight">#F8E3E3E3</color>
+    <color name="colorPrimary_Green">#ff008900</color>
+    <color name="colorPrimaryDark_Green">#ff004100</color>
+    <color name="colorPrimary_FashionBlue">#ff2455c6</color>
+    <color name="colorPrimaryDark_FashionBlue">#FF11295F</color>
+    <color name="colorPrimary_FieryOrange">#ffff9700</color>
+    <color name="colorPrimaryDark_FieryOrange">#FF934A00</color>
+    <color name="colorPrimary_SkyBlue">#ff2196f3</color>
+    <color name="colorPrimaryDark_SkyBlue">#FF0F477E</color>
+    <color name="colorPrimary_PurpleGrapes">#ff9c28b1</color>
+    <color name="colorPrimaryDark_PurpleGrapes">#FF4A1361</color>
+    <color name="colorPrimary_MintBlue">#ff00bcd5</color>
+    <color name="colorPrimaryDark_MintBlue">#ff005B64</color>
+    <color name="colorPrimary_SweetPink">#ffea1e63</color>
+    <color name="colorPrimaryDark_SweetPink">#FF740E37</color>
+    <color name="colorPrimary_AppleGreen">#ff8bc24a</color>
+    <color name="colorPrimaryDark_AppleGreen">#FF3E5F22</color>
+    <color name="colorPrimary_LakeTeal">#ff17927e</color>
+    <color name="colorPrimaryDark_LakeTeal">#FF004940</color>
 </resources>
