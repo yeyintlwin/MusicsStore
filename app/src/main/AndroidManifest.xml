@@ -22,8 +22,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.SetupActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ui.activity.MainActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.SetupActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:label="@string/action_settings" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.yeyintlwin.musicsstore.ui.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

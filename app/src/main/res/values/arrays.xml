@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="entries_loadmore">
+        <item>+12</item>
+        <item>+20 (default)</item>
+        <item>+30</item>
+        <item>+50</item>
+        <item>+100</item>
+    </string-array>
+    <string-array name="entries_favorite">
+        <item>12</item>
+        <item>20 (default)</item>
+        <item>30</item>
+        <item>50</item>
+        <item>100</item>
+    </string-array>
+   <string-array name="entry_values">
+        <item>12</item>
+        <item>20</item>
+        <item>30</item>
+        <item>50</item>
+        <item>100</item>
+    </string-array>
+</resources>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+        <PreferenceCategory
+            android:title="Appearance">
+            <Preference android:title="Themes"
+                android:key="themes"
+                android:summary="Change app theme."/>
+            <SwitchPreference
+                android:title="Fonts stands"
+                android:key="isUnicode"
+                android:summaryOn="Unicode"
+                android:summaryOff="Zawgyi" />
+        </PreferenceCategory>
+        <PreferenceCategory android:title="Other Settings">
+            <ListPreference
+                android:title="Load more songs limit"
+                android:key="loadMoreLimit"
+                android:summary="To save your mobile data."
+                android:dialogTitle="Load more songs limit"
+                android:entries="@array/entries_loadmore"
+                android:entryValues="@array/entry_values"
+                android:defaultValue="20"/>
+            <ListPreference
+                android:entries="@array/entries_favorite"
+                android:title="Favorite songs limit"
+                android:key="favoritesLimit"
+                android:summary="Limit of the most downloaded songs."
+                android:defaultValue="20"
+                android:dialogTitle="Favorite songs limit"
+                android:entryValues="@array/entry_values" />
+        </PreferenceCategory>
+        <PreferenceCategory android:title="Connect">
+            <Preference
+                android:title="E-mail"
+                android:key="dev_email"
+                android:summary="dev.yeyintlwin@gmail.com" />
+            <Preference
+                android:title="App Page"
+                android:key="app_facebook"
+                android:summary="https://www.facebook.com/myanmarmusics.mm" />
+            <Preference
+                android:title="Developer Facebook"
+                android:key="dev_facebook"
+                android:summary="https://www.facebook.com/yeyintlwin.mm" />
+        </PreferenceCategory>
+
+
+</PreferenceScreen>
