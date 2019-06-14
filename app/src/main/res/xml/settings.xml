@@ -33,15 +33,15 @@
             <Preference
                 android:title="E-mail"
                 android:key="dev_email"
-                android:summary="dev.yeyintlwin@gmail.com" />
+                android:summary="@string/developer_email" />
             <Preference
                 android:title="App Page"
                 android:key="app_facebook"
-                android:summary="https://www.facebook.com/myanmarmusics.mm" />
+                android:summary="@string/app_facebook" />
             <Preference
                 android:title="Developer Facebook"
                 android:key="dev_facebook"
-                android:summary="https://www.facebook.com/yeyintlwin.mm" />
+                android:summary="@string/developer_facebook" />
         </PreferenceCategory>
 
 
