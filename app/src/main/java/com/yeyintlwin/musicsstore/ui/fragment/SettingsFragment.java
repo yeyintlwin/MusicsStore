@@ -9,6 +9,7 @@ import android.preference.PreferenceFragment;
 
 import com.yeyintlwin.musicsstore.BuildConfig;
 import com.yeyintlwin.musicsstore.R;
+import com.yeyintlwin.musicsstore.ui.activity.SettingsActivity;
 import com.yeyintlwin.musicsstore.ui.widget.ThemesDialog;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
@@ -42,6 +43,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 //bottomSheetDialog.show();
                 new ThemesDialog(getContext()).show(getActivity());
+
+                //ThemesDialog.getInstance(getActivity(), SettingsActivity.class).show();
                 return true;
             case "dev_email":
                 Intent intent = new Intent("android.intent.action.SEND_MULTIPLE");
