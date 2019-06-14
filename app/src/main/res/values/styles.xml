@@ -18,51 +18,60 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!--My customize themes. -->
+    <!--Animations-->
     <style name="WindowAnimationTransition">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
-
+    <!--Themes-->
     <style name="Green">
         <item name="colorPrimary">@color/colorPrimary_Green</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_Green</item>
         <item name="colorAccent">@color/colorPrimary_Green</item>
     </style>
+
     <style name="FashionBlue">
         <item name="colorPrimary">@color/colorPrimary_FashionBlue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_FashionBlue</item>
         <item name="colorAccent">@color/colorPrimary_FashionBlue</item>
     </style>
+
     <style name="FieryOrange">
         <item name="colorPrimary">@color/colorPrimary_FieryOrange</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_FieryOrange</item>
         <item name="colorAccent">@color/colorPrimary_FieryOrange</item>
     </style>
+
     <style name="SkyBlue">
         <item name="colorPrimary">@color/colorPrimary_SkyBlue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_SkyBlue</item>
         <item name="colorAccent">@color/colorPrimary_SkyBlue</item>
     </style>
+
     <style name="PurpleGrapes">
         <item name="colorPrimary">@color/colorPrimary_PurpleGrapes</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_PurpleGrapes</item>
         <item name="colorAccent">@color/colorPrimary_PurpleGrapes</item>
     </style>
+
     <style name="MintBlue">
         <item name="colorPrimary">@color/colorPrimary_MintBlue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_MintBlue</item>
         <item name="colorAccent">@color/colorPrimary_MintBlue</item>
     </style>
+
     <style name="SweetPink">
         <item name="colorPrimary">@color/colorPrimary_SweetPink</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_SweetPink</item>
         <item name="colorAccent">@color/colorPrimary_SweetPink</item>
     </style>
+
     <style name="AppleGreen">
         <item name="colorPrimary">@color/colorPrimary_AppleGreen</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_AppleGreen</item>
         <item name="colorAccent">@color/colorPrimary_AppleGreen</item>
     </style>
+
     <style name="LakeTeal">
         <item name="colorPrimary">@color/colorPrimary_LakeTeal</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_LakeTeal</item>
