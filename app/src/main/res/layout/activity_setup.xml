@@ -1,6 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:fillViewport="true">
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="#FFFFFF">
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:padding="10sp"
+                android:id="@+id/activity_setupLinearLayout">
+
+                <LinearLayout
+                    android:id="@+id/activity_setupClickArea1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="5sp"
+                    android:background="?android:selectableItemBackground">
+
+                    <RelativeLayout
+                        android:layout_height="100sp"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/layout_border">
+
+                        <View
+                            android:background="#E73BEF"
+                            android:layout_height="wrap_content"
+                            android:layout_width="12sp"
+                            android:layout_alignParentStart="true"
+                            android:id="@+id/activity_setupView1"/>
+
+                        <RelativeLayout
+                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:id="@+id/activity_setupRelativeLayout1">
+
+                            <ImageView
+                                android:layout_height="32sp"
+                                android:layout_width="32sp"
+                                android:layout_centerVertical="true"
+                                android:id="@+id/activity_setupImageView1"
+                                android:layout_margin="5sp"
+                                android:src="@drawable/ic_action_tick"
+                                android:padding="5sp"
+                                tools:ignore="ContentDescription" />
+
+                            <View
+                                android:background="?android:attr/dividerHorizontal"
+                                android:layout_height="match_parent"
+                                android:layout_width="1sp"
+                                android:layout_marginTop="1sp"
+                                android:layout_marginBottom="1sp"/>
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_height="match_parent"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:text="@string/text_uni"
+                            android:layout_toEndOf="@id/activity_setupView1"
+                            android:layout_toStartOf="@id/activity_setupRelativeLayout1"
+                            android:padding="10sp"
+                            android:gravity="center_vertical"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/activity_setupClickArea2"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:background="?android:selectableItemBackground">
+
+                    <RelativeLayout
+                        android:layout_height="100sp"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/layout_border">
+
+                        <View
+                            android:background="#3BB2EF"
+                            android:layout_height="wrap_content"
+                            android:layout_width="12sp"
+                            android:layout_alignParentStart="true"
+                            android:id="@+id/activity_setupView2"/>
+
+                        <RelativeLayout
+                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:id="@+id/activity_setupRelativeLayout2">
+
+                            <ImageView
+                                android:layout_height="32sp"
+                                android:layout_width="32sp"
+                                android:layout_centerVertical="true"
+                                android:id="@+id/activity_setupImageView2"
+                                android:layout_margin="5sp"
+                                android:padding="5sp"
+                                tools:ignore="ContentDescription" />
+
+                            <View
+                                android:background="?android:attr/dividerHorizontal"
+                                android:layout_height="match_parent"
+                                android:layout_width="1sp"
+                                android:layout_marginTop="1sp"
+                                android:layout_marginBottom="1sp"/>
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_height="match_parent"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:text="@string/text_zawgyi"
+                            android:layout_toEndOf="@id/activity_setupView2"
+                            android:layout_toStartOf="@id/activity_setupRelativeLayout2"
+                            android:padding="10sp"
+                            android:gravity="center_vertical"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/activity_setupTextView3"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:text="@string/check_text"
+                android:layout_above="@id/activity_setupLinearLayout"
+                android:layout_margin="10sp"/>
+
+            <at.markushi.ui.CircleButton
+                android:id="@+id/activity_setupat.markushi.ui.CircleButton"
+                android:layout_width="73dip"
+                android:layout_height="73dip"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10sp"
+                android:src="@drawable/forward"
+                app:cb_color="#99CC00"
+                app:cb_pressedRingWidth="8dip"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+</android.support.design.widget.CoordinatorLayout>
