@@ -15,6 +15,11 @@ import java.util.ArrayList;
 
 import at.markushi.ui.CircleButton;
 
+/**
+ * Developer- Ye Yint Lwin
+ * 15/Jun/2019
+ **/
+
 public class ThemesDialog {
 
     private static final String THEME = "yeyintlwin@theme";
@@ -94,7 +99,7 @@ public class ThemesDialog {
     }
 
     private void setup() {
-        mActivity.getLayoutInflater();
+
         @SuppressLint("InflateParams")
         View bottomSheetView = LayoutInflater.from(mActivity).inflate(R.layout.themes_dialog, null);
         bottomSheetDialog = new ThemesBottomSheetDialog(mActivity);
