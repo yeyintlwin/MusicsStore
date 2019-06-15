@@ -17,7 +17,7 @@ import at.markushi.ui.CircleButton;
 
 public class ThemesDialog {
 
-    private static final String THEME = "theme";
+    private static final String THEME = "yeyintlwin@theme";
     private static final int DEFAULT_THEME = R.style.SweetPink;
 
     private static SharedPreferences preferences;
@@ -47,15 +47,17 @@ public class ThemesDialog {
             R.style.MintBlue,
             R.style.FieryOrange,
             R.style.LakeTeal};
-    private ThemesBottomSheetDialog bottomSheetDialog;
-    private CircleButton.OnClickListener cbOnClickListener = new CircleButton.OnClickListener() {
 
+    private ThemesBottomSheetDialog bottomSheetDialog;
+
+    private CircleButton.OnClickListener cbOnClickListener = new CircleButton.OnClickListener() {
         @Override
         public void onClick(View p1) {
             bottomSheetDialog.cancel();
             for (int i = 0; i < ids.length; i++) {
                 if (ids[i] == p1.getId()) {
-                    putInt(themes[i]);
+                    //Store theme to Preferences
+                    editor.putInt(ThemesDialog.THEME, themes[i]).apply();
                     break;
                 }
             }
@@ -63,6 +65,7 @@ public class ThemesDialog {
             if (mListener != null) mListener.onThemesDialogItemClick(mActivity);
         }
     };
+
     private BottomSheetBehavior bottomSheetBehavior;
 
     @SuppressLint("CommitPrefEdits")
@@ -81,16 +84,8 @@ public class ThemesDialog {
         mListener = listener;
     }
 
-    public static int getCurrentTheme(Context context) {
-        return getInt(context);
-    }
-
-    private static void putInt(Integer value) {
-        editor.putInt(ThemesDialog.THEME, value).apply();
-    }
-
     @SuppressLint("CommitPrefEdits")
-    private static int getInt(Context context) {
+    public static int getCurrentTheme(Context context) {
         if (preferences == null) {
             preferences = PreferenceManager.getDefaultSharedPreferences(context);
             editor = preferences.edit();
@@ -116,7 +111,7 @@ public class ThemesDialog {
         }
 
         for (int i = 0; i < ids.length; i++) {
-            if (getInt(mActivity) == themes[i]) {
+            if (getCurrentTheme(mActivity) == themes[i]) {
                 buttons.get(i).setImageResource(R.drawable.ic_action_tick);
                 break;
             }
