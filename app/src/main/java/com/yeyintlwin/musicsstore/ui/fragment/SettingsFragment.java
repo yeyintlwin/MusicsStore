@@ -9,16 +9,12 @@ import android.preference.PreferenceFragment;
 
 import com.yeyintlwin.musicsstore.BuildConfig;
 import com.yeyintlwin.musicsstore.R;
-import com.yeyintlwin.musicsstore.ui.activity.SettingsActivity;
-import com.yeyintlwin.musicsstore.ui.widget.ThemesDialog;
+import com.yeyintlwin.musicsstore.ui.widget.themesdialog.ThemesDialog;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
-    private static SettingsFragment fragment;
 
     public static PreferenceFragment getInstance() {
-        if (fragment == null)
-            fragment = new SettingsFragment();
-        return fragment;
+        return new SettingsFragment();
     }
 
     @Override
@@ -40,11 +36,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public boolean onPreferenceClick(Preference preference) {
         switch (preference.getKey()) {
             case "themes":
-                //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                //bottomSheetDialog.show();
-                new ThemesDialog(getContext()).show(getActivity());
-
-                //ThemesDialog.getInstance(getActivity(), SettingsActivity.class).show();
+                ThemesDialog.getInstance(getActivity()).show();
                 return true;
             case "dev_email":
                 Intent intent = new Intent("android.intent.action.SEND_MULTIPLE");

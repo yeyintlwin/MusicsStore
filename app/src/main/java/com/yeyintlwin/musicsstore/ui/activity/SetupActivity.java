@@ -50,12 +50,12 @@ public class SetupActivity extends BaseActivity implements OnClickListener {
         switch (p1.getId()) {
             case R.id.activity_setupClickArea1:
                 checkZawgyi.setImageBitmap(null);
-                checkUnicode.setImageResource(R.drawable.ic_action_tick);
+                checkUnicode.setImageResource(R.drawable.ic_action_tick_setup);
                 MainController.putBoolean(Constants.IS_UNICODE, true);
                 break;
             case R.id.activity_setupClickArea2:
                 checkUnicode.setImageBitmap(null);
-                checkZawgyi.setImageResource(R.drawable.ic_action_tick);
+                checkZawgyi.setImageResource(R.drawable.ic_action_tick_setup);
                 MainController.putBoolean(Constants.IS_UNICODE, false);
                 break;
             case R.id.activity_setupat_markushi_ui_CircleButton:
