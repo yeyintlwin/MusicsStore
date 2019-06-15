@@ -2,15 +2,14 @@ package com.yeyintlwin.musicsstore.ui.widget.themesdialog;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.BottomSheetBehavior;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.yeyintlwin.musicsstore.Constants;
-import com.yeyintlwin.musicsstore.MainController;
 import com.yeyintlwin.musicsstore.R;
-import com.yeyintlwin.musicsstore.ui.activity.SettingsActivity;
 
 import java.util.ArrayList;
 
@@ -18,6 +17,15 @@ import at.markushi.ui.CircleButton;
 
 public class ThemesDialog {
 
+    private static final String THEME = "theme";
+    private static final int DEFAULT_THEME = R.style.SweetPink;
+
+    private static SharedPreferences preferences;
+    private static SharedPreferences.Editor editor;
+
+    private static OnThemesDialogItemClickListener mListener;
+    @SuppressLint("StaticFieldLeak")
+    private static Activity mActivity;
     private final int[] ids = {
             R.id.dialogCircleButton1,
             R.id.dialogCircleButton2,
@@ -39,10 +47,7 @@ public class ThemesDialog {
             R.style.MintBlue,
             R.style.FieryOrange,
             R.style.LakeTeal};
-
-    private Activity activity;
     private ThemesBottomSheetDialog bottomSheetDialog;
-
     private CircleButton.OnClickListener cbOnClickListener = new CircleButton.OnClickListener() {
 
         @Override
@@ -50,17 +55,21 @@ public class ThemesDialog {
             bottomSheetDialog.cancel();
             for (int i = 0; i < ids.length; i++) {
                 if (ids[i] == p1.getId()) {
-                    MainController.putInt(Constants.THEME, themes[i]);
+                    putInt(themes[i]);
                     break;
                 }
             }
-            changeActivity(activity, new Intent(activity, SettingsActivity.class));
+
+            if (mListener != null) mListener.onThemesDialogItemClick(mActivity);
         }
     };
     private BottomSheetBehavior bottomSheetBehavior;
 
+    @SuppressLint("CommitPrefEdits")
     private ThemesDialog(Activity activity) {
-        this.activity = activity;
+        mActivity = activity;
+        preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        editor = preferences.edit();
         setup();
     }
 
@@ -68,12 +77,33 @@ public class ThemesDialog {
         return new ThemesDialog(activity);
     }
 
+    public static void setOnThemesDialogItemClickListener(OnThemesDialogItemClickListener listener) {
+        mListener = listener;
+    }
+
+    public static int getCurrentTheme(Context context) {
+        return getInt(context);
+    }
+
+    private static void putInt(Integer value) {
+        editor.putInt(ThemesDialog.THEME, value).apply();
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    private static int getInt(Context context) {
+        if (preferences == null) {
+            preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            editor = preferences.edit();
+        }
+        return preferences.getInt(ThemesDialog.THEME, ThemesDialog.DEFAULT_THEME);
+    }
+
     private void setup() {
-        activity.getLayoutInflater();
+        mActivity.getLayoutInflater();
         @SuppressLint("InflateParams")
-        View bottomSheetView = LayoutInflater.from(activity).inflate(R.layout.themes_dialog, null);
-        bottomSheetDialog = new ThemesBottomSheetDialog(activity);
-        bottomSheetDialog.setOwnerActivity(activity);
+        View bottomSheetView = LayoutInflater.from(mActivity).inflate(R.layout.themes_dialog, null);
+        bottomSheetDialog = new ThemesBottomSheetDialog(mActivity);
+        bottomSheetDialog.setOwnerActivity(mActivity);
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetBehavior = BottomSheetBehavior.from((View) bottomSheetView.getParent());
         bottomSheetBehavior.setPeekHeight(350);
@@ -86,19 +116,11 @@ public class ThemesDialog {
         }
 
         for (int i = 0; i < ids.length; i++) {
-            if (MainController.getInt(Constants.THEME, Constants.DEFAULT_THEME) == themes[i]) {
+            if (getInt(mActivity) == themes[i]) {
                 buttons.get(i).setImageResource(R.drawable.ic_action_tick);
                 break;
             }
         }
-    }
-
-    private void changeActivity(Activity activity, Intent intent) {
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        activity.overridePendingTransition(0, 0);
-        activity.startActivity(intent);
-        activity.overridePendingTransition(0, 0);
-        activity.finish();
     }
 
     public void show() {

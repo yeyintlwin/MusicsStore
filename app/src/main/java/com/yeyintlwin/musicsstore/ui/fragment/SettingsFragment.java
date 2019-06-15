@@ -1,6 +1,7 @@
 package com.yeyintlwin.musicsstore.ui.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.preference.PreferenceFragment;
 
 import com.yeyintlwin.musicsstore.BuildConfig;
 import com.yeyintlwin.musicsstore.R;
+import com.yeyintlwin.musicsstore.ui.activity.SettingsActivity;
+import com.yeyintlwin.musicsstore.ui.widget.themesdialog.OnThemesDialogItemClickListener;
 import com.yeyintlwin.musicsstore.ui.widget.themesdialog.ThemesDialog;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
@@ -37,6 +40,17 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         switch (preference.getKey()) {
             case "themes":
                 ThemesDialog.getInstance(getActivity()).show();
+                ThemesDialog.setOnThemesDialogItemClickListener(new OnThemesDialogItemClickListener() {
+                    @Override
+                    public void onThemesDialogItemClick(Activity activity) {
+                        Intent intent = new Intent(activity, SettingsActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        activity.overridePendingTransition(0, 0);
+                        activity.startActivity(intent);
+                        activity.overridePendingTransition(0, 0);
+                        activity.finish();
+                    }
+                });
                 return true;
             case "dev_email":
                 Intent intent = new Intent("android.intent.action.SEND_MULTIPLE");
