@@ -90,6 +90,7 @@ public class MainActivity extends BaseActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_tools) {
+            finish();
             startActivity(new Intent(this,SettingsActivity.class));
 
         } else if (id == R.id.nav_share) {
