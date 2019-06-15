@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
+import com.yeyintlwin.musicsstore.ui.widget.acknowledgement.LicensesDialog;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -85,6 +86,7 @@ public class MainActivity extends BaseActivity
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
+            LicensesDialog.getInstance(this).show();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_tools) {
