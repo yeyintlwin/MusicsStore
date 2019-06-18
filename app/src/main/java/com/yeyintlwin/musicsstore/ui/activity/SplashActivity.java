@@ -20,7 +20,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        ((TextView) findViewById(R.id.splash_title)).setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Lobster-Regular.ttf"));
+        ((TextView) findViewById(R.id.splash_title)).setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Lobster.ttf"));
         ((TextView) findViewById(R.id.splash_version)).setText("v" + BuildConfig.VERSION_NAME);
 
         new Handler().postDelayed(new Runnable() {

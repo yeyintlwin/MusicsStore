@@ -36,7 +36,7 @@ public class AboutsFragment extends BaseFragment implements View.OnClickListener
         ((TextView) view.findViewById(R.id.abouts_app_name))
                 .setTypeface(Typeface.createFromAsset(
                         Objects.requireNonNull(getContext()).getAssets(),
-                        "fonts/Lobster-Regular.ttf"));
+                        "fonts/Lobster.ttf"));
         ((TextView) view.findViewById(R.id.abouts_developer_name))
                 .setTypeface(Typeface.createFromAsset(getContext().getAssets(),
                         "fonts/GreatVibes.ttf"));
