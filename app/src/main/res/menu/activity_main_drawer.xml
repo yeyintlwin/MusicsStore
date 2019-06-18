@@ -26,7 +26,7 @@
             android:icon="@drawable/ic_menu_album"
             android:title="@string/menu_albums" />
         <item
-            android:id="@+id/country"
+            android:id="@+id/nav_country"
             android:icon="@drawable/ic_menu_country"
             android:title="@string/menu_countries" />
         <item
