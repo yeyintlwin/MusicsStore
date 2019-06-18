@@ -30,6 +30,7 @@ public class LicensesDialog {
                 p1.dismiss();
             }
         });
+
     }
 
     public void show() {
