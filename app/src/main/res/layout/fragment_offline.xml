@@ -35,9 +35,10 @@
             android:id="@+id/fragment_offlineat.markushi.ui.CircleButton"
             android:layout_width="73dip"
             android:layout_height="73dip"
-            android:layout_below="@id/fragment_offlineTextView"
+            android:layout_below="@+id/fragment_offlineTextView"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_retry"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_action_retry"
             app:cb_color="?colorPrimary"
             app:cb_pressedRingWidth="8dip" />
     </RelativeLayout>
