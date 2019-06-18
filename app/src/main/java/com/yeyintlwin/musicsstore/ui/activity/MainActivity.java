@@ -18,7 +18,7 @@ import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.listener.OnOfflineRetryListener;
 import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.AboutsFragment;
-import com.yeyintlwin.musicsstore.ui.fragment.base.OfflineFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.OfflineFragment;
 import com.yeyintlwin.musicsstore.utils.Utils;
 
 public class MainActivity extends BaseActivity
