@@ -18,6 +18,11 @@ import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.listener.OnOfflineRetryListener;
 import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.AboutsFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.CategoriesFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.DownloadFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.FavoritesFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.HomeFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.MusicsFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.OfflineFragment;
 import com.yeyintlwin.musicsstore.utils.Utils;
 
@@ -62,6 +67,7 @@ public class MainActivity extends BaseActivity
                             Log.w("Clicked: ", menuItemCarrier.getTitle().toString());
                             break;
                         case R.id.nav_download:
+                            fragmentReplace(DownloadFragment.getInstance());
                             break;
                         case R.id.nav_settings:
                             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
@@ -88,19 +94,25 @@ public class MainActivity extends BaseActivity
 
     private void netSections(final int resId) {
 
-        if (!Utils.isConnected(getBaseContext()))//Check connection.
+        if (Utils.isConnected(getBaseContext()))//Check connection.
             switch (resId) {
                 case R.id.nav_home:
+                    fragmentReplace(HomeFragment.getInstance());
                     break;
                 case R.id.nav_musics:
+                    fragmentReplace(MusicsFragment.getInstance());
                     break;
                 case R.id.nav_artist:
                 case R.id.nav_genre:
                 case R.id.nav_album:
                 case R.id.nav_country:
+                    CategoriesFragment categoriesFragment = CategoriesFragment.getInstance();
+                    //TODO Bundle Blah
+                    fragmentReplace(categoriesFragment);
                     //Special Fragment
                     break;
                 case R.id.nav_favorite:
+                    fragmentReplace(FavoritesFragment.getInstance());
                     break;
             }
         else {
