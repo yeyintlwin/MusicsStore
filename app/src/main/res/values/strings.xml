@@ -7,12 +7,6 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
     <string name="version">v1.0</string>
     <string name="text_uni">သီဟိုဠ်မှ ဉာဏ်ကြီးရှင်သည် အာယုဝဍ်ဎနဆေးညွှန်းစာကို ဇလွန်ဈေးဘေးဗာဒံပင်ထက် အဓိဋ္ဌာန်လျက် ဂဃနဏဖတ်ခဲ့သည်။</string>
     <string name="text_zawgyi">သီဟိုဠ္မွ ဉာဏ္ႀကီးရွင္သည္ အာယုဝဍ္ဎနေဆးၫႊန္းစာကို ဇလြန္ေဈးေဘးဗာဒံပင္ထက္ အဓိ႒ာန္လ်က္ ဂဃနဏဖတ္ခဲ့သည္။</string>
@@ -20,4 +14,16 @@
     <string name="developer_email">dev.yeyintlwin@gmail.com</string>
     <string name="app_facebook">https://www.facebook.com/myanmarmusics.mm</string>
     <string name="developer_facebook">https://www.facebook.com/yeyintlwin.mm</string>
+
+    <string name="menu_home">မူလေနရာ</string>
+    <string name="menu_musics">ေတးသီခ်င္းမ်ားအားလံုး</string>
+    <string name="menu_artists">အဆိုေတာ္မ်ား</string>
+    <string name="menu_genres">သီခ်င္းအမ်ိဳးအစားမ်ား</string>
+    <string name="menu_albums">အယ္ဘန္မ်ား</string>
+    <string name="menu_countries">ႏိုင္ငံအလိုက္</string>
+    <string name="menu_favorites">လူႀကိဳက္မ်ားေတးသီခ်င္းမ်ား</string>
+    <string name="menu_downloads">ေဒါင္းလုဒ္လုပ္ငန္းစဥ္းမ်ား</string>
+    <string name="menu_settings">အျပင္အဆင္</string>
+    <string name="menu_abouts">ဒီအက္ပ္ေလးအေၾကာင္း</string>
+    <string name="menu_other_options">အျခားေရြးခ်ယ္စရာမ်ား</string>
 </resources>

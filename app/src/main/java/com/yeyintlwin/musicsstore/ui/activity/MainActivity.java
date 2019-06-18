@@ -16,7 +16,6 @@ import android.view.View;
 
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
-import com.yeyintlwin.musicsstore.ui.widget.acknowledgement.LicensesDialog;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,19 +83,9 @@ public class MainActivity extends BaseActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-            LicensesDialog.getInstance(this).show();
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_settings) {
             finish();
             startActivity(new Intent(this,SettingsActivity.class));
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
