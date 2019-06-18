@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,9 @@ import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private MenuItem menuItemCarrier;
+    private boolean isMenuItemSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,32 @@ public class MainActivity extends BaseActivity
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                //TODO
+                if (isMenuItemSelected)
+                    switch (menuItemCarrier.getItemId()) {
+                        case R.id.nav_home:
+                        case R.id.nav_musics:
+                        case R.id.nav_artist:
+                        case R.id.nav_genre:
+                        case R.id.nav_album:
+                        case R.id.nav_country:
+                        case R.id.nav_favorite:
+                            Log.w("Clicked: ", menuItemCarrier.getTitle().toString());
+                            break;
+                        case R.id.nav_download:
+                            break;
+                        case R.id.nav_settings:
+                            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            overridePendingTransition(0, 0);
+                            startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                            overridePendingTransition(0, 0);
+                            finish();
+                            break;
+                        case R.id.nav_about:
+                            break;
+                    }
+                isMenuItemSelected = false;
+
             }
         };
         drawer.addDrawerListener(toggle);
@@ -68,12 +97,8 @@ public class MainActivity extends BaseActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -81,40 +106,10 @@ public class MainActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-
-        switch (item.getItemId()) {
-            case R.id.nav_home:
-                break;
-            case R.id.nav_musics:
-                break;
-            case R.id.nav_artist:
-                break;
-            case R.id.nav_genre:
-                break;
-            case R.id.nav_album:
-                break;
-            case R.id.nav_country:
-                break;
-            case R.id.nav_favorite:
-                break;
-            case R.id.nav_download:
-                break;
-            case R.id.nav_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                overridePendingTransition(0, 0);
-                startActivity(new Intent(this, SettingsActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-                break;
-            case R.id.nav_about:
-                break;
-        }
-
+        menuItemCarrier = item;
+        isMenuItemSelected = true;
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
