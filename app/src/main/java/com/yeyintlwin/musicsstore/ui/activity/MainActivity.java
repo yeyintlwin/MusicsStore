@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +16,8 @@ import android.view.View;
 
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
+import com.yeyintlwin.musicsstore.ui.fragment.AboutsFragment;
+import com.yeyintlwin.musicsstore.utils.Utils;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,8 +38,15 @@ public class MainActivity extends BaseActivity
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
+                int resId = 0;
+                try {
+                    resId = menuItemCarrier.getItemId();
+                } catch (NullPointerException e) {
+                    Log.w("log", e.toString());
+                }
+
                 if (isMenuItemSelected)
-                    switch (menuItemCarrier.getItemId()) {
+                    switch (resId) {
                         case R.id.nav_home:
                         case R.id.nav_musics:
                         case R.id.nav_artist:
@@ -43,6 +54,7 @@ public class MainActivity extends BaseActivity
                         case R.id.nav_album:
                         case R.id.nav_country:
                         case R.id.nav_favorite:
+                            netSections(resId);
                             Log.w("Clicked: ", menuItemCarrier.getTitle().toString());
                             break;
                         case R.id.nav_download:
@@ -56,6 +68,7 @@ public class MainActivity extends BaseActivity
                             finish();
                             break;
                         case R.id.nav_about:
+                            fragmentReplace(AboutsFragment.getInstance());
                             break;
                     }
                 isMenuItemSelected = false;
@@ -66,6 +79,38 @@ public class MainActivity extends BaseActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    private void netSections(int resId) {
+
+        if (Utils.isConnected(getBaseContext()))//Check connection.
+            switch (resId) {
+                case R.id.nav_home:
+                    break;
+                case R.id.nav_musics:
+                    break;
+                case R.id.nav_artist:
+                    break;
+                case R.id.nav_genre:
+                    break;
+                case R.id.nav_album:
+                    break;
+                case R.id.nav_country:
+                    break;
+                case R.id.nav_favorite:
+                    break;
+            }
+        else {
+            //TODO Show Offline Fragment.
+        }
+    }
+
+    private void fragmentReplace(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fragmentManager.beginTransaction().replace(R.id.main_frame, fragment).commit();
+    }
+
+
 
     @Override
     public void onBackPressed() {
