@@ -36,4 +36,9 @@ public class SplashActivity extends BaseActivity {
             }
         }, 1000);
     }
+
+    @Override
+    public void onBackPressed() {
+        //Disable Back Key.
+    }
 }

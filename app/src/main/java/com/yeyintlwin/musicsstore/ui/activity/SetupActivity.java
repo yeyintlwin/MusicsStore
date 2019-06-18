@@ -70,4 +70,8 @@ public class SetupActivity extends BaseActivity implements OnClickListener {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        //Disable Back Key.
+    }
 }
