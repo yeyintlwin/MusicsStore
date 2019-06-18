@@ -21,6 +21,8 @@ import com.yeyintlwin.musicsstore.ui.fragment.AboutsFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.OfflineFragment;
 import com.yeyintlwin.musicsstore.utils.Utils;
 
+import java.util.Objects;
+
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -81,7 +83,7 @@ public class MainActivity extends BaseActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        netSections(R.id.nav_home);//Default Home
+        netSections(R.id.nav_home);// Home as default.
     }
 
     private void netSections(final int resId) {
@@ -93,12 +95,10 @@ public class MainActivity extends BaseActivity
                 case R.id.nav_musics:
                     break;
                 case R.id.nav_artist:
-                    break;
                 case R.id.nav_genre:
-                    break;
                 case R.id.nav_album:
-                    break;
                 case R.id.nav_country:
+                    //Special Fragment
                     break;
                 case R.id.nav_favorite:
                     break;
@@ -137,6 +137,7 @@ public class MainActivity extends BaseActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         menuItemCarrier = item;
         isMenuItemSelected = true;
+        Objects.requireNonNull(getSupportActionBar()).setTitle(item.getTitle());
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
