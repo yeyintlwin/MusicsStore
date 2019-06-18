@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="?attr/actionBarSize"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/fragment_offlineTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="10sp"
+            android:text="@string/offline_text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:layout_width="150sp"
+            android:layout_height="150sp"
+            android:layout_above="@id/fragment_offlineTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10sp"
+            android:src="@drawable/ic_offline"
+            tools:ignore="ContentDescription" />
+
+        <at.markushi.ui.CircleButton
+            android:id="@+id/fragment_offlineat.markushi.ui.CircleButton"
+            android:layout_width="73dip"
+            android:layout_height="73dip"
+            android:layout_below="@id/fragment_offlineTextView"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_retry"
+            app:cb_color="?colorPrimary"
+            app:cb_pressedRingWidth="8dip" />
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

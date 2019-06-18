@@ -14,6 +14,7 @@
     <string name="developer_email">dev.yeyintlwin@gmail.com</string>
     <string name="app_facebook">https://www.facebook.com/myanmarmusics.mm</string>
     <string name="developer_facebook">https://www.facebook.com/yeyintlwin.mm</string>
+    <string name="developer_name">Ye Yint Lwin</string>
 
     <string name="menu_home">မူလေနရာ</string>
     <string name="menu_musics">ေတးသီခ်င္းမ်ားအားလံုး</string>
@@ -26,5 +27,6 @@
     <string name="menu_settings">အျပင္အဆင္</string>
     <string name="menu_abouts">ဒီအက္ပ္ေလးအေၾကာင္း</string>
     <string name="menu_other_options">အျခားေရြးခ်ယ္စရာမ်ား</string>
-    <string name="developer_name">Ye Yint Lwin</string>
+
+    <string name="offline_text">အင္တာနက္မရပါ!</string>
 </resources>

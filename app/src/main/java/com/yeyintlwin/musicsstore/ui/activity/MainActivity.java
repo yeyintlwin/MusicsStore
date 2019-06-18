@@ -15,8 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.yeyintlwin.musicsstore.R;
+import com.yeyintlwin.musicsstore.listener.OnOfflineRetryListener;
 import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.AboutsFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.base.OfflineFragment;
 import com.yeyintlwin.musicsstore.utils.Utils;
 
 public class MainActivity extends BaseActivity
@@ -78,11 +80,13 @@ public class MainActivity extends BaseActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        netSections(R.id.nav_home);//Default Home
     }
 
-    private void netSections(int resId) {
+    private void netSections(final int resId) {
 
-        if (Utils.isConnected(getBaseContext()))//Check connection.
+        if (!Utils.isConnected(getBaseContext()))//Check connection.
             switch (resId) {
                 case R.id.nav_home:
                     break;
@@ -100,7 +104,15 @@ public class MainActivity extends BaseActivity
                     break;
             }
         else {
-            //TODO Show Offline Fragment.
+            fragmentReplace(OfflineFragment.getInstance()
+                    .setCurrentSectionId(resId)
+                    .setOfflineRetryListener(new OnOfflineRetryListener() {
+                        @Override
+                        public void onRetry(int sessionId) {
+                            netSections(sessionId);
+                            Log.w("retry", resId + "");
+                        }
+                    }));
         }
     }
 
@@ -109,7 +121,6 @@ public class MainActivity extends BaseActivity
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         fragmentManager.beginTransaction().replace(R.id.main_frame, fragment).commit();
     }
-
 
 
     @Override
