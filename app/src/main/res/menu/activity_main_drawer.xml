@@ -6,6 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
+            android:checked="true"
             android:icon="@drawable/ic_menu_home"
             android:title="@string/menu_home" />
         <item
@@ -37,19 +38,20 @@
 
     <item android:title="@string/menu_other_options">
         <menu>
-            <item
-                android:id="@+id/nav_download"
-                android:icon="@drawable/ic_menu_download"
-                android:title="@string/menu_downloads" />
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_menu_settings"
-                android:title="@string/menu_settings" />
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_menu_about"
-                android:title="@string/menu_abouts" />
-
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_download"
+                    android:icon="@drawable/ic_menu_download"
+                    android:title="@string/menu_downloads" />
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_menu_settings"
+                    android:title="@string/menu_settings" />
+                <item
+                    android:id="@+id/nav_about"
+                    android:icon="@drawable/ic_menu_about"
+                    android:title="@string/menu_abouts" />
+            </group>
         </menu>
     </item>
 
