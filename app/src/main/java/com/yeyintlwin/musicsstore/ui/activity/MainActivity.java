@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,8 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.yeyintlwin.musicsstore.R;
+import com.yeyintlwin.musicsstore.listener.OnFragmentNextStepListener;
 import com.yeyintlwin.musicsstore.listener.OnOfflineRetryListener;
 import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.AboutsFragment;
@@ -27,12 +30,24 @@ import com.yeyintlwin.musicsstore.ui.fragment.OfflineFragment;
 import com.yeyintlwin.musicsstore.utils.Utils;
 
 import java.util.Objects;
+import java.util.Stack;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String BUNDLE_ACTION_CATEGORY = "bundle_category";
+    public static final String BUNDLE_ACTION_MUSIC = "bundle_music";
+
+    public static final int ACTION_MUSICS = R.id.nav_musics;
+    public static final int ACTION_ARTIST = R.id.nav_artist;
+    public static final int ACTION_GENRE = R.id.nav_genre;
+    public static final int ACTION_ALBUM = R.id.nav_genre;
+    public static final int ACTION_COUNTRY = R.id.nav_album;
+
+    private Stack<Fragment> fragmentStack;
     private MenuItem menuItemCarrier;
     private boolean isMenuItemSelected = false;
+    private long back_press;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +105,7 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         netSections(R.id.nav_home);// Home as default.
+        fragmentStack = new Stack<>();
     }
 
     private void netSections(final int resId) {
@@ -100,16 +116,33 @@ public class MainActivity extends BaseActivity
                     fragmentReplace(HomeFragment.getInstance());
                     break;
                 case R.id.nav_musics:
-                    fragmentReplace(MusicsFragment.getInstance());
+                    MusicsFragment musicsFragment = MusicsFragment.getInstance();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putInt(BUNDLE_ACTION_MUSIC, ACTION_MUSICS);
+                    musicsFragment.setArguments(bundle1);
+                    fragmentReplace(musicsFragment);
                     break;
                 case R.id.nav_artist:
                 case R.id.nav_genre:
                 case R.id.nav_album:
                 case R.id.nav_country:
+                    fragmentStack.clear();//clear stored stack
+
                     CategoriesFragment categoriesFragment = CategoriesFragment.getInstance();
-                    //TODO Bundle Blah
-                    fragmentReplace(categoriesFragment);
-                    //Special Fragment
+                    final Bundle bundle = new Bundle();
+                    bundle.putInt(BUNDLE_ACTION_CATEGORY, resId);
+                    categoriesFragment.setArguments(bundle);
+                    fragmentStoreFirstStack(categoriesFragment);
+                    categoriesFragment.setOnFragmentNextStepListener(new OnFragmentNextStepListener() {
+                        @Override
+                        public void onNextStep(int action) {
+                            MusicsFragment musicsFragment = MusicsFragment.getInstance();
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putInt(BUNDLE_ACTION_MUSIC, action);
+                            musicsFragment.setArguments(bundle1);
+                            fragmentStoreSecondStack(musicsFragment);
+                        }
+                    });
                     break;
                 case R.id.nav_favorite:
                     fragmentReplace(FavoritesFragment.getInstance());
@@ -134,15 +167,50 @@ public class MainActivity extends BaseActivity
         fragmentManager.beginTransaction().replace(R.id.main_frame, fragment).commit();
     }
 
+    private void fragmentStoreFirstStack(CategoriesFragment categoriesFragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame, categoriesFragment);
+        fragmentStack.add(categoriesFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void fragmentStoreSecondStack(MusicsFragment musicsFragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.main_frame, musicsFragment);
+        fragmentStack.lastElement().onPause();
+        fragmentTransaction.hide(fragmentStack.lastElement());
+        fragmentStack.push(musicsFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void fragmentBackFromSecondStack() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentStack.lastElement().onPause();
+        fragmentTransaction.remove(fragmentStack.pop());
+        fragmentStack.lastElement().onResume();
+        fragmentTransaction.show(fragmentStack.lastElement());
+        fragmentTransaction.commit();
+    }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+            return;
         }
+        if (fragmentStack.size() == 2) {//Max stacks size
+            fragmentBackFromSecondStack();
+            return;
+        }
+        if (back_press + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            return;
+        }
+        Toast.makeText(this, "Press Back Bottom again to exist!", Toast.LENGTH_SHORT).show();
+        back_press = System.currentTimeMillis();
+
     }
 
     @Override
