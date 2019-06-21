@@ -55,6 +55,15 @@ public class MainActivity extends BaseActivity
     private View stacksLayout;
     private RelativeLayout firstStack;
     private RelativeLayout secondStack;
+
+    private View.OnClickListener sbSecondStackClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (fragmentStack.size() == 2) {//Max stacks size
+                fragmentBackFromSecondStack();
+            }
+        }
+    };
     private TextView firstStackText;
     private TextView secondStackText;
 
@@ -64,6 +73,7 @@ public class MainActivity extends BaseActivity
         secondStack = stacksLayout.findViewById(R.id.second_layout);
         firstStackText = stacksLayout.findViewById(R.id.first_text);
         secondStackText = stacksLayout.findViewById(R.id.second_text);
+        firstStack.setOnClickListener(sbSecondStackClickListener);
     }
 
     @Override
@@ -82,10 +92,6 @@ public class MainActivity extends BaseActivity
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-
-                stacksLayout.setVisibility(View.GONE);
-                firstStack.setVisibility(View.GONE);
-                secondStack.setVisibility(View.GONE);
 
                 int resId = 0;
                 try {
@@ -152,7 +158,7 @@ public class MainActivity extends BaseActivity
                 case R.id.nav_genre:
                 case R.id.nav_album:
                 case R.id.nav_country: {
-                    stacksLayout.setVisibility(View.VISIBLE);
+                    sbShowHomeLayout();
                     CategoriesFragment categoriesFragment = CategoriesFragment.getInstance();
                     final Bundle bundle = new Bundle();
                     bundle.putInt(BUNDLE_ACTION_CATEGORY, resId);
@@ -200,8 +206,7 @@ public class MainActivity extends BaseActivity
         fragmentStack.add(categoriesFragment);
         fragmentTransaction.commit();
 
-        firstStack.setVisibility(View.VISIBLE);
-        firstStackText.setText(getSupportActionBar().getTitle());
+        sbShowFirstStack(Objects.requireNonNull(getSupportActionBar()).getTitle());
     }
 
     private void fragmentStoreSecondStack(MusicsFragment musicsFragment) {
@@ -212,8 +217,7 @@ public class MainActivity extends BaseActivity
         fragmentStack.push(musicsFragment);
         fragmentTransaction.commit();
 
-        secondStack.setVisibility(View.VISIBLE);
-        secondStackText.setText("Second Stack");
+        sbShowSecondStack("Second Stack");//TODO
     }
 
     private void fragmentBackFromSecondStack() {
@@ -224,7 +228,7 @@ public class MainActivity extends BaseActivity
         fragmentTransaction.show(fragmentStack.lastElement());
         fragmentTransaction.commit();
 
-        secondStack.setVisibility(View.GONE);
+        sbClearSecondStack();
     }
 
     @Override
@@ -248,6 +252,30 @@ public class MainActivity extends BaseActivity
 
     }
 
+    private void sbClearAll() {
+        stacksLayout.setVisibility(View.GONE);
+        firstStack.setVisibility(View.GONE);
+        secondStack.setVisibility(View.GONE);
+    }
+
+    private void sbClearSecondStack() {
+        secondStack.setVisibility(View.GONE);
+    }
+
+    private void sbShowHomeLayout() {
+        stacksLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void sbShowFirstStack(CharSequence categoryName) {
+        firstStack.setVisibility(View.VISIBLE);
+        firstStackText.setText(categoryName);
+    }
+
+    private void sbShowSecondStack(String name) {
+        secondStack.setVisibility(View.VISIBLE);
+        secondStackText.setText(name);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         menuItemCarrier = item;
@@ -258,6 +286,7 @@ public class MainActivity extends BaseActivity
         drawer.closeDrawer(GravityCompat.START);
 
         fragmentStack.clear();//clear stored stack
+        sbClearAll();
         return true;
     }
 }
