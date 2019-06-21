@@ -110,7 +110,8 @@ public class MainActivity extends BaseActivity
 
     private void netSections(final int resId) {
 
-        if (Utils.isConnected(getBaseContext()))//Check connection.
+        if (Utils.isConnected(getBaseContext())) //Check connection.
+        {
             switch (resId) {
                 case R.id.nav_home:
                     fragmentReplace(HomeFragment.getInstance());
@@ -125,8 +126,7 @@ public class MainActivity extends BaseActivity
                 case R.id.nav_artist:
                 case R.id.nav_genre:
                 case R.id.nav_album:
-                case R.id.nav_country:
-
+                case R.id.nav_country: {
                     CategoriesFragment categoriesFragment = CategoriesFragment.getInstance();
                     final Bundle bundle = new Bundle();
                     bundle.putInt(BUNDLE_ACTION_CATEGORY, resId);
@@ -143,11 +143,12 @@ public class MainActivity extends BaseActivity
                         }
                     });
                     break;
+                }
                 case R.id.nav_favorite:
                     fragmentReplace(FavoritesFragment.getInstance());
                     break;
             }
-        else {
+        } else {
             fragmentReplace(OfflineFragment.getInstance()
                     .setCurrentSectionId(resId)
                     .setOfflineRetryListener(new OnOfflineRetryListener() {
