@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.yeyintlwin.musicsstore.ui.activity.MainActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.category.listener.OnFragmentNextStepListener;
 
 public class CategoriesFragment extends BaseFragment {
 

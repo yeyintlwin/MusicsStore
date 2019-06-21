@@ -26,10 +26,10 @@ import com.yeyintlwin.musicsstore.ui.fragment.FavoritesFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.HomeFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.MusicsFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.category.CategoriesFragment;
-import com.yeyintlwin.musicsstore.ui.fragment.category.OnFragmentNextStepListener;
+import com.yeyintlwin.musicsstore.ui.fragment.category.listener.OnFragmentNextStepListener;
 import com.yeyintlwin.musicsstore.ui.fragment.download.DownloadFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.offline.OfflineFragment;
-import com.yeyintlwin.musicsstore.ui.fragment.offline.OnOfflineRetryListener;
+import com.yeyintlwin.musicsstore.ui.fragment.offline.listener.OnOfflineRetryListener;
 import com.yeyintlwin.musicsstore.utils.Utils;
 
 import java.util.Objects;

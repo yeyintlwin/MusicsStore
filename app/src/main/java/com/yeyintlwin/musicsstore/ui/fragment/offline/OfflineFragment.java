@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.offline.listener.OnOfflineRetryListener;
 
 import java.util.Objects;
 
