@@ -1,4 +1,4 @@
-package com.yeyintlwin.musicsstore.ui.fragment;
+package com.yeyintlwin.musicsstore.ui.fragment.category;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.yeyintlwin.musicsstore.listener.OnFragmentNextStepListener;
 import com.yeyintlwin.musicsstore.ui.activity.MainActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 

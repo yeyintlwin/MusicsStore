@@ -20,14 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yeyintlwin.musicsstore.R;
-import com.yeyintlwin.musicsstore.listener.OnFragmentNextStepListener;
 import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.AboutsFragment;
-import com.yeyintlwin.musicsstore.ui.fragment.CategoriesFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.DownloadFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.FavoritesFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.HomeFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.MusicsFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.category.CategoriesFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.category.OnFragmentNextStepListener;
 import com.yeyintlwin.musicsstore.ui.fragment.offline.OfflineFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.offline.OnOfflineRetryListener;
 import com.yeyintlwin.musicsstore.utils.Utils;
