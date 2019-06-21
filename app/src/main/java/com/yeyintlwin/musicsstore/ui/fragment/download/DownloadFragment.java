@@ -1,4 +1,4 @@
-package com.yeyintlwin.musicsstore.ui.fragment;
+package com.yeyintlwin.musicsstore.ui.fragment.download;
 
 import android.content.Context;
 import android.os.Bundle;
