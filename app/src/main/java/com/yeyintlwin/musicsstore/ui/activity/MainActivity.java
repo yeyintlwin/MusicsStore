@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yeyintlwin.musicsstore.R;
@@ -49,10 +51,28 @@ public class MainActivity extends BaseActivity
     private boolean isMenuItemSelected = false;
     private long back_press;
 
+
+    private View stacksLayout;
+    private RelativeLayout firstStack;
+    private RelativeLayout secondStack;
+    private TextView firstStackText;
+    private TextView secondStackText;
+
+    private void init() {
+        stacksLayout = findViewById(R.id.stacks_view);
+        firstStack = stacksLayout.findViewById(R.id.first_layout);
+        secondStack = stacksLayout.findViewById(R.id.second_layout);
+        firstStackText = stacksLayout.findViewById(R.id.first_text);
+        secondStackText = stacksLayout.findViewById(R.id.second_text);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        init();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -62,6 +82,11 @@ public class MainActivity extends BaseActivity
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
+
+                stacksLayout.setVisibility(View.GONE);
+                firstStack.setVisibility(View.GONE);
+                secondStack.setVisibility(View.GONE);
+
                 int resId = 0;
                 try {
                     resId = menuItemCarrier.getItemId();
@@ -127,6 +152,7 @@ public class MainActivity extends BaseActivity
                 case R.id.nav_genre:
                 case R.id.nav_album:
                 case R.id.nav_country: {
+                    stacksLayout.setVisibility(View.VISIBLE);
                     CategoriesFragment categoriesFragment = CategoriesFragment.getInstance();
                     final Bundle bundle = new Bundle();
                     bundle.putInt(BUNDLE_ACTION_CATEGORY, resId);
@@ -145,6 +171,7 @@ public class MainActivity extends BaseActivity
                     break;
                 }
                 case R.id.nav_favorite:
+                    stacksLayout.setVisibility(View.GONE);
                     fragmentReplace(FavoritesFragment.getInstance());
                     break;
             }
@@ -172,6 +199,9 @@ public class MainActivity extends BaseActivity
         fragmentTransaction.replace(R.id.main_frame, categoriesFragment);
         fragmentStack.add(categoriesFragment);
         fragmentTransaction.commit();
+
+        firstStack.setVisibility(View.VISIBLE);
+        firstStackText.setText(getSupportActionBar().getTitle());
     }
 
     private void fragmentStoreSecondStack(MusicsFragment musicsFragment) {
@@ -181,6 +211,9 @@ public class MainActivity extends BaseActivity
         fragmentTransaction.hide(fragmentStack.lastElement());
         fragmentStack.push(musicsFragment);
         fragmentTransaction.commit();
+
+        secondStack.setVisibility(View.VISIBLE);
+        secondStackText.setText("Second Stack");
     }
 
     private void fragmentBackFromSecondStack() {
@@ -190,6 +223,8 @@ public class MainActivity extends BaseActivity
         fragmentStack.lastElement().onResume();
         fragmentTransaction.show(fragmentStack.lastElement());
         fragmentTransaction.commit();
+
+        secondStack.setVisibility(View.GONE);
     }
 
     @Override
