@@ -10,4 +10,5 @@ If you would like to contribute code you can do so through GitHub by forking the
 ### ..::[Contact Me]::..
 - Github:   https://github.com/yeyintlwin
 - Email:    yeyintlwin73@gmail.com
+- LinkedIn: https://www.linkedin.com/in/yeyintlwin
 - Facebook: https://facebook.com/yeyintlwin.mm
