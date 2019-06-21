@@ -126,7 +126,6 @@ public class MainActivity extends BaseActivity
                 case R.id.nav_genre:
                 case R.id.nav_album:
                 case R.id.nav_country:
-                    fragmentStack.clear();//clear stored stack
 
                     CategoriesFragment categoriesFragment = CategoriesFragment.getInstance();
                     final Bundle bundle = new Bundle();
@@ -221,6 +220,8 @@ public class MainActivity extends BaseActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        fragmentStack.clear();//clear stored stack
         return true;
     }
 }
