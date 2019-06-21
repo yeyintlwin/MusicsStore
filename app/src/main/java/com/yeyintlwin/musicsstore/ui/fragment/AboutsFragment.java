@@ -1,5 +1,6 @@
 package com.yeyintlwin.musicsstore.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.yeyintlwin.musicsstore.BuildConfig;
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.widget.acknowledgement.LicensesDialog;
@@ -28,6 +30,7 @@ public class AboutsFragment extends BaseFragment implements View.OnClickListener
         return aboutsFragment;
     }
 
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -40,6 +43,7 @@ public class AboutsFragment extends BaseFragment implements View.OnClickListener
         ((TextView) view.findViewById(R.id.abouts_developer_name))
                 .setTypeface(Typeface.createFromAsset(getContext().getAssets(),
                         "fonts/GreatVibes.ttf"));
+        ((TextView) view.findViewById(R.id.abouts_version)).setText("v" + BuildConfig.VERSION_NAME);
         view.findViewById(R.id.abouts_licenses).setOnClickListener(this);
         return view;
     }
