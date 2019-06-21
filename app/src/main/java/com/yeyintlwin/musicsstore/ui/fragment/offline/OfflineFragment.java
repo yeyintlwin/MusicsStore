@@ -1,4 +1,4 @@
-package com.yeyintlwin.musicsstore.ui.fragment;
+package com.yeyintlwin.musicsstore.ui.fragment.offline;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yeyintlwin.musicsstore.R;
-import com.yeyintlwin.musicsstore.listener.OnOfflineRetryListener;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 
 import java.util.Objects;

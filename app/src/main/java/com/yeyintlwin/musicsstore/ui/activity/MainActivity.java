@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,7 +21,6 @@ import android.widget.Toast;
 
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.listener.OnFragmentNextStepListener;
-import com.yeyintlwin.musicsstore.listener.OnOfflineRetryListener;
 import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.AboutsFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.CategoriesFragment;
@@ -28,7 +28,8 @@ import com.yeyintlwin.musicsstore.ui.fragment.DownloadFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.FavoritesFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.HomeFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.MusicsFragment;
-import com.yeyintlwin.musicsstore.ui.fragment.OfflineFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.offline.OfflineFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.offline.OnOfflineRetryListener;
 import com.yeyintlwin.musicsstore.utils.Utils;
 
 import java.util.Objects;
@@ -56,6 +57,8 @@ public class MainActivity extends BaseActivity
     private RelativeLayout firstStack;
     private RelativeLayout secondStack;
 
+    private TabLayout tabLayout;
+
     private View.OnClickListener sbSecondStackClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -74,6 +77,8 @@ public class MainActivity extends BaseActivity
         firstStackText = stacksLayout.findViewById(R.id.first_text);
         secondStackText = stacksLayout.findViewById(R.id.second_text);
         firstStack.setOnClickListener(sbSecondStackClickListener);
+
+        tabLayout = findViewById(R.id.main_tabs);
     }
 
     @Override
