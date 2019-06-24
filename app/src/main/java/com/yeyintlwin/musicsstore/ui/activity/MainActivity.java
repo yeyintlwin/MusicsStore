@@ -36,7 +36,7 @@ import java.util.Objects;
 import java.util.Stack;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, DownloadFragment.TabLayoutSetupCallback {
 
     public static final String BUNDLE_ACTION_CATEGORY = "bundle_category";
     public static final String BUNDLE_ACTION_MUSIC = "bundle_music";
@@ -98,6 +98,7 @@ public class MainActivity extends BaseActivity
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
 
+
                 int resId = 0;
                 try {
                     resId = menuItemCarrier.getItemId();
@@ -119,6 +120,7 @@ public class MainActivity extends BaseActivity
                             break;
                         case R.id.nav_download:
                             fragmentReplace(DownloadFragment.getInstance());
+                            tabLayout.setVisibility(View.VISIBLE);
                             break;
                         case R.id.nav_settings:
                             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
@@ -292,6 +294,13 @@ public class MainActivity extends BaseActivity
 
         fragmentStack.clear();//clear stored stack
         sbClearAll();
+        tabLayout.setVisibility(View.GONE);
         return true;
+    }
+
+    @Override
+    public TabLayout getTabLayout() {
+        tabLayout.setVisibility(View.VISIBLE);
+        return tabLayout;
     }
 }
