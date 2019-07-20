@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/music_swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/music_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+        <include
+                layout="@layout/layout_empty"
+                android:id="@+id/music_empty"
+                android:visibility="gone"/>
+        <include
+                layout="@layout/layout_offline"
+                android:id="@+id/music_offline"
+                android:visibility="gone"/>
+        <include
+                layout="@layout/layout_loading"
+                android:id="@+id/music_loading"
+                android:visibility="gone"/>
+    </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
 
-</LinearLayout>

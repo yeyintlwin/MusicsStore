@@ -1,0 +1,34 @@
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        android:layout_marginBottom="?attr/actionBarSize">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:id="@+id/layout_emptyImageView"
+                android:layout_width="120sp"
+                android:layout_height="120sp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_empty_songs"
+                tools:ignore="ContentDescription"/>
+
+        <TextView
+                android:id="@+id/layout_emptyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_emptyImageView"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/empty_songs"/>
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
+

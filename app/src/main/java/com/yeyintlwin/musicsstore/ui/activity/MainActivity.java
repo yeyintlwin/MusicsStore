@@ -18,16 +18,15 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.AboutsFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.FavoritesFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.HomeFragment;
-import com.yeyintlwin.musicsstore.ui.fragment.MusicsFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.category.CategoriesFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.category.listener.OnFragmentNextStepListener;
 import com.yeyintlwin.musicsstore.ui.fragment.download.DownloadFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.music.MusicsFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.offline.OfflineFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.offline.listener.OnOfflineRetryListener;
 import com.yeyintlwin.musicsstore.utils.Utils;

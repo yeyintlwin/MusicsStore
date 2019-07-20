@@ -12,13 +12,12 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.activity.MainActivity;
-import com.yeyintlwin.musicsstore.ui.fragment.AboutsFragment;
-import com.yeyintlwin.musicsstore.ui.fragment.HomeFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.download.adapter.TabsItemPagerAdapter;
+import com.yeyintlwin.musicsstore.ui.fragment.download.child.FinishFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.download.child.QueueFragment;
 
 public class DownloadFragment extends BaseFragment {
     private static DownloadFragment downloadFragment;
@@ -39,8 +38,8 @@ public class DownloadFragment extends BaseFragment {
         adapter = new TabsItemPagerAdapter(getChildFragmentManager());
 
 
-        adapter.addFragment(HomeFragment.getInstance(), "A");
-        adapter.addFragment(AboutsFragment.getInstance(), "B");
+        adapter.addFragment(QueueFragment.getInstance(), "Queue");
+        adapter.addFragment(FinishFragment.getInstance(), "Finish");
     }
 
     @Nullable

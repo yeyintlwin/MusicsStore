@@ -28,5 +28,8 @@
     <string name="menu_abouts">ဒီအက္ပ္ေလးအေၾကာင္း</string>
     <string name="menu_other_options">အျခားေရြးခ်ယ္စရာမ်ား</string>
 
+    <string name="loading_songs">ဖတ္ေနသည္</string>
+    <string name="empty_songs">သီခ်င္းမရွိပါ။</string>
+
     <string name="offline_text">အင္တာနက္မရပါ!</string>
 </resources>
