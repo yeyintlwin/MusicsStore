@@ -39,6 +39,7 @@ public class MainActivity extends BaseActivity
 
     public static final String BUNDLE_ACTION_CATEGORY = "bundle_category";
     public static final String BUNDLE_ACTION_MUSIC = "bundle_music";
+    public static final String BUNDLE_ACTION_SELECTED_ID = "bundle_selected_id";
 
     public static final int ACTION_MUSICS = R.id.nav_musics;
     public static final int ACTION_ARTIST = R.id.nav_artist;
@@ -172,10 +173,11 @@ public class MainActivity extends BaseActivity
                     fragmentStoreFirstStack(categoriesFragment);
                     categoriesFragment.setOnFragmentNextStepListener(new OnFragmentNextStepListener() {
                         @Override
-                        public void onNextStep(int action) {
+                        public void onNextStep(int action, String categoryId) {
                             MusicsFragment musicsFragment = MusicsFragment.getInstance();
                             Bundle bundle1 = new Bundle();
                             bundle1.putInt(BUNDLE_ACTION_MUSIC, action);
+                            bundle1.putString(BUNDLE_ACTION_SELECTED_ID, categoryId);
                             musicsFragment.setArguments(bundle1);
                             fragmentStoreSecondStack(musicsFragment);
                         }

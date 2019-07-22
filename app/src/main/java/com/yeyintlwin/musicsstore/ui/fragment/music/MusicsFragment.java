@@ -54,6 +54,9 @@ public class MusicsFragment extends BaseFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             action = bundle.getInt(MainActivity.BUNDLE_ACTION_MUSIC);
+            String selectedId = bundle.getString(MainActivity.BUNDLE_ACTION_SELECTED_ID);
+
+            Log.w("msfsid", selectedId);
         }
 
         Log.w("MusicFragment", action + "");
@@ -71,8 +74,6 @@ public class MusicsFragment extends BaseFragment {
     private void test() {
 
         for (int i = 0; i <= 10; i++) {
-            Log.w("loop", i + "");
-
             MusicInfo musicInfo = new MusicInfo();
             musicInfo.setTitle("Over The Horizon");
             musicInfo.setArtist("Samsung Music Band");

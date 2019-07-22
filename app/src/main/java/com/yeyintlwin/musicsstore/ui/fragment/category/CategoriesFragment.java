@@ -9,12 +9,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.*;
 import android.widget.Toast;
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.activity.MainActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.category.adapter.CategoryAdapter;
+import com.yeyintlwin.musicsstore.ui.fragment.category.adapter.viewholder.listener.OnCategoryItemClickListener;
 import com.yeyintlwin.musicsstore.ui.fragment.category.entity.CategoryInfo;
 import com.yeyintlwin.musicsstore.ui.fragment.category.listener.OnFragmentNextStepListener;
 
@@ -69,6 +71,14 @@ public class CategoriesFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         init(view);
         recyclerView.setAdapter(categoryAdapter);
+        categoryAdapter.setOnCategoryItemClickListener(new OnCategoryItemClickListener() {
+            @Override
+            public void onCategoryItemClick(CategoryInfo categoryInfo) {
+                if (mListener != null) mListener.onNextStep(action, categoryInfo.getId());
+                Toast.makeText(getActivity(), categoryInfo.getName(), Toast.LENGTH_SHORT).show();
+                Log.w("item click", categoryInfo.getName());
+            }
+        });
         return view;//button;
     }
 

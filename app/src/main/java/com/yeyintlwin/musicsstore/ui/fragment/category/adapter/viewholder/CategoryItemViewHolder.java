@@ -3,24 +3,16 @@ package com.yeyintlwin.musicsstore.ui.fragment.category.adapter.viewholder;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import com.yeyintlwin.musicsstore.ui.fragment.category.adapter.viewholder.listener.OnCategoryItemClickListener;
-import com.yeyintlwin.musicsstore.ui.fragment.category.entity.CategoryInfo;
+import android.widget.TextView;
+import com.yeyintlwin.musicsstore.R;
 
 public class CategoryItemViewHolder extends RecyclerView.ViewHolder {
-    public CategoryInfo categoryInfo;
-    private OnCategoryItemClickListener listener;
+    public TextView name;
 
     public CategoryItemViewHolder(@NonNull View itemView) {
         super(itemView);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) listener.onCategoryItemClick(categoryInfo);
-            }
-        });
+        name = itemView.findViewById(R.id.item_categoryTextView);
     }
 
-    public void setOnCategoryItemClickListener(OnCategoryItemClickListener categoryItemClickListener) {
-        listener = categoryItemClickListener;
-    }
+
 }
