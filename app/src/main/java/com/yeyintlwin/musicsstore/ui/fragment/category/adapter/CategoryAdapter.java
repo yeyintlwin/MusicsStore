@@ -2,7 +2,10 @@ package com.yeyintlwin.musicsstore.ui.fragment.category.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import com.yeyintlwin.musicsstore.R;
+import com.yeyintlwin.musicsstore.ui.fragment.category.adapter.viewholder.CategoryItemViewHolder;
 import com.yeyintlwin.musicsstore.ui.fragment.category.entity.CategoryInfo;
 
 import java.util.ArrayList;
@@ -10,21 +13,22 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<CategoryInfo> infos;
+    private List<CategoryInfo> ifs;
 
     public CategoryAdapter() {
-        infos = new ArrayList<>();
+        ifs = new ArrayList<>();
     }
 
     public void setData(List<CategoryInfo> categoryInfoList) {
-        this.infos.clear();
-        this.infos.addAll(categoryInfoList);
+        this.ifs.clear();
+        this.ifs.addAll(categoryInfoList);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return null;
+
+        return new CategoryItemViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_category, viewGroup, false));
     }
 
     @Override
@@ -34,6 +38,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return infos.size();
+        return ifs.size();
     }
 }
