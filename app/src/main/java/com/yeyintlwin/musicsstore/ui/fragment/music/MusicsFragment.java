@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class MusicsFragment extends BaseFragment {
-    private static MusicsFragment musicsFragment;
+    //private static MusicsFragment musicsFragment;
     private int action;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -37,29 +36,36 @@ public class MusicsFragment extends BaseFragment {
     }
 
     public static MusicsFragment getInstance() {
-        if (musicsFragment == null) musicsFragment = new MusicsFragment();
-        return musicsFragment;
+        //if (musicsFragment == null)
+        // musicsFragment = new MusicsFragment();
+        return new MusicsFragment();//musicsFragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            action = bundle.getInt(MainActivity.BUNDLE_ACTION_MUSIC);
+
+            if (action != MainActivity.ACTION_MUSICS) {
+                String selectedId = bundle.getString(MainActivity.BUNDLE_ACTION_SELECTED_ID);
+
+                Log.w("msfsid", selectedId);
+
+                //TODO here is important place.
+            }
+        }
+
+        Log.w("MusicFragment", action + "");
     }
 
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            action = bundle.getInt(MainActivity.BUNDLE_ACTION_MUSIC);
-            String selectedId = bundle.getString(MainActivity.BUNDLE_ACTION_SELECTED_ID);
-
-            Log.w("msfsid", selectedId);
-        }
-
-        Log.w("MusicFragment", action + "");
 
         View view = inflater.inflate(R.layout.fragment_musics, container, false);
         init(view);
@@ -128,14 +134,14 @@ public class MusicsFragment extends BaseFragment {
             }
         });
 
-        MenuItemCompat.setOnActionExpandListener(menuItem, new MenuItemCompat.OnActionExpandListener() {
+        menuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
-            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+            public boolean onMenuItemActionExpand(MenuItem item) {
                 return true;
             }
 
             @Override
-            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+            public boolean onMenuItemActionCollapse(MenuItem item) {
                 return true;
             }
         });
