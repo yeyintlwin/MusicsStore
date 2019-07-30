@@ -1,4 +1,4 @@
-package com.yeyintlwin.musicsstore.ui.fragment;
+package com.yeyintlwin.musicsstore.ui.fragment.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,19 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 
-public class FavoritesFragment extends BaseFragment {
-    private static FavoritesFragment favoritesFragment;
+public class HomeFragment extends BaseFragment {
+    private static HomeFragment homeFragment;
 
-    public FavoritesFragment() {
+    public HomeFragment() {
+
     }
 
-    public static FavoritesFragment getInstance() {
-        if (favoritesFragment == null) favoritesFragment = new FavoritesFragment();
-        return favoritesFragment;
+    public static HomeFragment getInstance() {
+        if (homeFragment == null) homeFragment = new HomeFragment();
+        return homeFragment;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +30,7 @@ public class FavoritesFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         TextView textView = new TextView(getContext());
-        textView.setText("Favorites");
+        textView.setText("Home");
         return textView;
     }
 
