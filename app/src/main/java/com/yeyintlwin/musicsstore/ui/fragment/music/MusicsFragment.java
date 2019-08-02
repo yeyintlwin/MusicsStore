@@ -1,15 +1,17 @@
 package com.yeyintlwin.musicsstore.ui.fragment.music;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.*;
 import android.widget.Toast;
@@ -18,27 +20,26 @@ import com.yeyintlwin.musicsstore.ui.activity.MainActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.music.adapter.MusicAdapter;
 import com.yeyintlwin.musicsstore.ui.fragment.music.entity.MusicInfo;
+import com.yeyintlwin.musicsstore.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class MusicsFragment extends BaseFragment {
-    //private static MusicsFragment musicsFragment;
-    private int action;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private List<MusicInfo> musicInfoList;
     private MusicAdapter musicAdapter;
 
+    private Activity activity;
+
     public MusicsFragment() {
     }
 
     public static MusicsFragment getInstance() {
-        //if (musicsFragment == null)
-        // musicsFragment = new MusicsFragment();
-        return new MusicsFragment();//musicsFragment;
+        return new MusicsFragment();
     }
 
     @Override
@@ -46,20 +47,19 @@ public class MusicsFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+        activity = getActivity();
+
         Bundle bundle = getArguments();
         if (bundle != null) {
-            action = bundle.getInt(MainActivity.BUNDLE_ACTION_MUSIC);
+            int action = bundle.getInt(MainActivity.BUNDLE_ACTION_MUSIC);
 
             if (action != MainActivity.ACTION_MUSICS) {
                 String selectedId = bundle.getString(MainActivity.BUNDLE_ACTION_SELECTED_ID);
-
-                Log.w("msfsid", selectedId);
 
                 //TODO here is important place.
             }
         }
 
-        Log.w("MusicFragment", action + "");
     }
 
     @SuppressLint("SetTextI18n")
@@ -81,11 +81,12 @@ public class MusicsFragment extends BaseFragment {
 
         for (int i = 0; i <= 10; i++) {
             MusicInfo musicInfo = new MusicInfo();
-            musicInfo.setTitle("Over The Horizon");
-            musicInfo.setArtist("Samsung Music Band");
-            musicInfo.setGenre("Blue");
-            musicInfo.setAlbum("Samsung");
-            musicInfo.setCountry("English");
+            musicInfo.setTitle("Title (" + i + ")");
+            musicInfo.setArtist("Artist");
+            musicInfo.setGenre("Genre");
+            musicInfo.setAlbum("Album");
+
+            musicInfo.setCountry("Country");
             musicInfoList.add(musicInfo);
         }
         musicAdapter.setData(musicInfoList);
@@ -101,14 +102,45 @@ public class MusicsFragment extends BaseFragment {
         recyclerView.setItemViewCacheSize(500);
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
-        //recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Utils.getColum(getActivity(), 300), 1));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Utils.getColumn(activity, 300), 1));
 
         musicInfoList = new ArrayList<>();
         musicAdapter = new MusicAdapter();
         recyclerView.setAdapter(musicAdapter);
 
         test();
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {//Listen to scroll down action.
+                    StaggeredGridLayoutManager layoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
+                    assert layoutManager != null;
+                    int lastItemPosition = Utils.max(layoutManager.findLastVisibleItemPositions(new int[layoutManager.getSpanCount()])) + 1;
+                    int itemsCount = layoutManager.getItemCount();
+                    if (/*!isLoading &&*/ (itemsCount == lastItemPosition) /*&& (numRows > itemsCount)*/) {
+
+                        Log.w("load_more", "load now");
+                        /*insertLoadMore();
+                        requestFromLoadmore = true;
+                        if (startPoint < 0)startPoint = 0;
+                        startPoint = startPoint + Integer.parseInt(MainController.getString("loadMoreLimit", "20"));
+                        webSocket(searchQuery, startPoint);
+*/
+                    }
+
+                }
+            }
+        });
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Utils.getColumn(activity, 300), 1));
     }
 
     @Override
