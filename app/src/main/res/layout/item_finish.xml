@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:padding="5sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="5sp"
+        card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+            android:background="?android:selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/item_downloadedImageViewCover"
+                android:background="#b8c8cc"
+                android:layout_width="110sp"
+                android:layout_height="110sp"
+                android:layout_marginEnd="5sp"
+                tools:ignore="ContentDescription"/>
+
+        <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#353535"
+                android:ellipsize="end"
+                android:id="@+id/item_downloadedTextViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="5sp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:layout_toEndOf="@id/item_downloadedImageViewCover"/>
+
+        <ImageView
+                android:id="@+id/item_downloadedImageViewArtist"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_marginEnd="5sp"
+                android:layout_marginBottom="5sp"
+                android:layout_toEndOf="@id/item_downloadedImageViewCover"
+                android:layout_below="@id/item_downloadedTextViewTitle"
+                android:src="@drawable/ic_menu_artist"
+                tools:ignore="ContentDescription"/>
+
+        <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:ellipsize="end"
+                android:id="@+id/item_downloadedTextViewArtist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:layout_toEndOf="@id/item_downloadedImageViewArtist"
+                android:layout_below="@id/item_downloadedTextViewTitle"/>
+
+        <ImageView
+                android:id="@+id/item_downloadedImageViewGenre"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_marginEnd="5sp"
+                android:layout_marginBottom="5sp"
+                android:layout_toEndOf="@id/item_downloadedImageViewCover"
+                android:layout_below="@id/item_downloadedImageViewArtist"
+                android:src="@drawable/ic_menu_genre"
+                tools:ignore="ContentDescription"/>
+
+        <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/item_downloadedTextViewGenre"
+                android:ellipsize="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:layout_toEndOf="@id/item_downloadedImageViewGenre"
+                android:layout_below="@id/item_downloadedImageViewArtist"/>
+
+        <ImageView
+                android:id="@+id/item_downloadedImageViewAlbum"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_marginEnd="5sp"
+                android:layout_toEndOf="@id/item_downloadedImageViewCover"
+                android:layout_below="@id/item_downloadedImageViewGenre"
+                android:src="@drawable/ic_menu_album"
+                tools:ignore="ContentDescription"/>
+
+        <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:ellipsize="end"
+                android:id="@+id/item_downloadedTextViewAlbum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:layout_toEndOf="@id/item_downloadedImageViewAlbum"
+                android:layout_below="@id/item_downloadedImageViewGenre"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
+

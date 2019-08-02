@@ -16,8 +16,8 @@ import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.activity.MainActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.download.adapter.TabsItemPagerAdapter;
-import com.yeyintlwin.musicsstore.ui.fragment.download.child.FinishFragment;
-import com.yeyintlwin.musicsstore.ui.fragment.download.child.QueueFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.download.child.finish.FinishFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.download.child.queue.QueueFragment;
 
 public class DownloadFragment extends BaseFragment {
     private static DownloadFragment downloadFragment;

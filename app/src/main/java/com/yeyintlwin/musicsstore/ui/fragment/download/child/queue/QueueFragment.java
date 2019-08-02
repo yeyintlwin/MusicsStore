@@ -1,4 +1,4 @@
-package com.yeyintlwin.musicsstore.ui.fragment.download.child;
+package com.yeyintlwin.musicsstore.ui.fragment.download.child.queue;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
