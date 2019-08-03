@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/layout_border_queue">
+
+    <TextView
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:id="@+id/item_queueTextViewTitle"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:lines="1"/>
+
+    <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_below="@id/item_queueTextViewTitle"
+            android:id="@+id/itemqueueRelativeLayout1">
+
+        <Button
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/item_queueButton"
+                android:layout_marginStart="5dp"
+                style="?android:attr/buttonStyleSmall"/>
+
+        <TextView
+                android:id="@+id/item_queueTextViewStatus"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_alignBottom="@id/item_queueButton"/>
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_toStartOf="@id/item_queueButton"
+                android:layout_alignBottom="@id/item_queueButton"
+                android:id="@+id/item_queueTextViewPersize"
+                tools:ignore="RelativeOverlap"/>
+
+        <ProgressBar
+                android:id="@+id/item_queueProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:minHeight="2dp"
+                android:maxHeight="2dp"
+                android:layout_toStartOf="@id/item_queueButton"
+                android:layout_above="@id/item_queueTextViewPersize"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

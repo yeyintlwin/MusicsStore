@@ -53,10 +53,10 @@ public class FinishFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_download_finish, container, false);
 
-        swipeRefreshLayout = view.findViewById(R.id.fragment_downloaded_childandroid_support_v4_widget_SwipeRefreshLayout);
-        recyclerView = view.findViewById(R.id.fragment_downloaded_childandroid_support_v7_widget_RecyclerView);
-        emptyView = view.findViewById(R.id.fragment_downloaded_childinclude_empty);
-        loadingView = view.findViewById(R.id.fragment_downloaded_childinclude_loading);
+        swipeRefreshLayout = view.findViewById(R.id.finish_swipeRefresh);
+        recyclerView = view.findViewById(R.id.finish_recyclerView);
+        emptyView = view.findViewById(R.id.finish_empty);
+        loadingView = view.findViewById(R.id.finish_loading);
         emptyText = emptyView.findViewById(R.id.layout_emptyTextView);
         loadingText = loadingView.findViewById(R.id.layout_loadingTextView);
         loadingDotsText = loadingView.findViewById(R.id.loading_dotsTextView);
