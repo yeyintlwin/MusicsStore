@@ -1,5 +1,6 @@
 package com.yeyintlwin.musicsstore.ui.fragment.download.child.finish;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
@@ -24,11 +25,13 @@ import com.yeyintlwin.musicsstore.utils.Utils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import pl.tajchert.waitingdots.DotsTextView;
 
 public class FinishFragment extends BaseFragment {
 
+    @SuppressLint("StaticFieldLeak")
     private static FinishFragment finishFragment;
 
     private final int SHOW_RECYCLER = 0;
@@ -56,7 +59,8 @@ public class FinishFragment extends BaseFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_download_finish, container, false);
 
         swipeRefreshLayout = view.findViewById(R.id.finish_swipeRefresh);
@@ -81,7 +85,8 @@ public class FinishFragment extends BaseFragment {
         recyclerView.setItemViewCacheSize(500);
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), Utils.getColumn(getActivity(), 260)));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), Utils.getColumn(
+                Objects.requireNonNull(getActivity()), 260)));
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -91,14 +96,17 @@ public class FinishFragment extends BaseFragment {
         });
 
         adapter.setOnDeleteSongListener(new OnDeleteSongListener() {
+            @SuppressWarnings("ResultOfMethodCallIgnored")
             @Override
             public void onDeleteSong(FinishInfo info) {
-                Toast.makeText(getContext(), "deleted: " + info.getPath(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "name: " + info.getTitle() + "\npath: "
+                        + info.getPath(), Toast.LENGTH_SHORT).show();
                 new File(info.getPath()).delete();
                 infos.remove(info);
                 adapter.setData(infos);
                 adapter.notifyDataSetChanged();
-                viewControl(recyclerView.getLayoutManager().getItemCount() == 0 ? SHOW_EMPTY : SHOW_RECYCLER);
+                viewControl(Objects.requireNonNull(recyclerView.getLayoutManager())
+                        .getItemCount() == 0 ? SHOW_EMPTY : SHOW_RECYCLER);
             }
         });
 
@@ -108,7 +116,8 @@ public class FinishFragment extends BaseFragment {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), Utils.getColumn(getActivity(), 260)));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), Utils.getColumn(
+                Objects.requireNonNull(getActivity()), 260)));
     }
 
     private void viewControl(int viewType) {
@@ -144,7 +153,7 @@ public class FinishFragment extends BaseFragment {
 
         ArrayList<String> filePaths;
         try {
-            filePaths = Utils.getMp3Files(getContext());
+            filePaths = Utils.getMp3Files(Objects.requireNonNull(getContext()));
             if (filePaths.isEmpty()) {
                 viewControl(SHOW_EMPTY);
             } else {
@@ -186,7 +195,8 @@ public class FinishFragment extends BaseFragment {
         metadataRetriever.release();
         adapter.setData(infos);
         adapter.notifyDataSetChanged();
-        viewControl(recyclerView.getLayoutManager().getItemCount() == 0 ? SHOW_EMPTY : SHOW_RECYCLER);
+        viewControl(Objects.requireNonNull(
+                recyclerView.getLayoutManager()).getItemCount() == 0 ? SHOW_EMPTY : SHOW_RECYCLER);
 
     }
 
