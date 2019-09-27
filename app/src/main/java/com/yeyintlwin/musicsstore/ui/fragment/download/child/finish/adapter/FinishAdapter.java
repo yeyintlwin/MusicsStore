@@ -76,7 +76,7 @@ public class FinishAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (mListener != null) {
-                                mListener.onDeleteSong(downloadedInfo.getPath());
+                                mListener.onDeleteSong(downloadedInfo);
                             }
                         }
                     });

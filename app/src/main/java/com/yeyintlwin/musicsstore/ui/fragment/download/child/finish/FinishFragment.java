@@ -92,8 +92,13 @@ public class FinishFragment extends BaseFragment {
 
         adapter.setOnDeleteSongListener(new OnDeleteSongListener() {
             @Override
-            public void onDeleteSong(String absolutePath) {
-                Toast.makeText(getContext(), "deleted: " + absolutePath, Toast.LENGTH_SHORT).show();
+            public void onDeleteSong(FinishInfo info) {
+                Toast.makeText(getContext(), "deleted: " + info.getPath(), Toast.LENGTH_SHORT).show();
+                new File(info.getPath()).delete();
+                infos.remove(info);
+                adapter.setData(infos);
+                adapter.notifyDataSetChanged();
+                viewControl(recyclerView.getLayoutManager().getItemCount() == 0 ? SHOW_EMPTY : SHOW_RECYCLER);
             }
         });
 
