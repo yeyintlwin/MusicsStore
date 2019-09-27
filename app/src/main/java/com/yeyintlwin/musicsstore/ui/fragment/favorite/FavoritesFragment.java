@@ -12,15 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.favorite.adapter.FavoriteAdapter;
 import com.yeyintlwin.musicsstore.ui.fragment.favorite.entity.FavoriteInfo;
 import com.yeyintlwin.musicsstore.utils.Utils;
-import pl.tajchert.waitingdots.DotsTextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.tajchert.waitingdots.DotsTextView;
 
 public class FavoritesFragment extends BaseFragment {
     @SuppressLint("StaticFieldLeak")
@@ -112,18 +114,18 @@ public class FavoritesFragment extends BaseFragment {
             case SHOW_EMPTY:
                 swipeRefreshLayout.setRefreshing(false);
                 emptyView.setVisibility(View.VISIBLE);
-                //Utils.fontstands(emptyText);
+                Utils.fontStand(emptyText.getText().toString());
                 break;
             case SHOW_OFFLINE:
                 swipeRefreshLayout.setRefreshing(false);
                 offlineView.setVisibility(View.VISIBLE);
-                //Utils.fontstands(offlineText);
+                Utils.fontStand(offlineText.getText().toString());
                 break;
             case SHOW_LOADING:
                 swipeRefreshLayout.setRefreshing(true);
                 loadingView.setVisibility(View.VISIBLE);
                 loadingDotsText.start();
-                //Utils.fontstands(loadingText);
+                Utils.fontStand(loadingText.getText().toString());
                 break;
         }
     }

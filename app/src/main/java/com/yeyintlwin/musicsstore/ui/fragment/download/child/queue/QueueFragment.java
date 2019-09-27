@@ -11,14 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.download.child.queue.adapter.QueueAdapter;
 import com.yeyintlwin.musicsstore.ui.fragment.download.child.queue.entity.QueueInfo;
-import pl.tajchert.waitingdots.DotsTextView;
+import com.yeyintlwin.musicsstore.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.tajchert.waitingdots.DotsTextView;
 
 public class QueueFragment extends BaseFragment {
     @SuppressLint("StaticFieldLeak")
@@ -88,13 +91,13 @@ public class QueueFragment extends BaseFragment {
                 break;
             case SHOW_EMPTY:
                 emptyView.setVisibility(View.VISIBLE);
-                // Utils.fontstands(emptyText);
+                Utils.fontStand(emptyText.getText().toString());
                 swipeRefreshLayout.setRefreshing(false);
                 break;
             case SHOW_LOADING:
                 loadingView.setVisibility(View.VISIBLE);
                 loadingDotsText.start();
-                //Utils.fontstands(loadingText);
+                Utils.fontStand(loadingText.getText().toString());
                 swipeRefreshLayout.setRefreshing(true);
                 break;
         }

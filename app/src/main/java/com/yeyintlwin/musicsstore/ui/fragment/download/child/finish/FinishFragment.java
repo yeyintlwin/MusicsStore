@@ -1,6 +1,7 @@
 package com.yeyintlwin.musicsstore.ui.fragment.download.child.finish;
 
 import android.content.res.Configuration;
+import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,15 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.download.child.finish.adapter.FinishAdapter;
 import com.yeyintlwin.musicsstore.ui.fragment.download.child.finish.entity.FinishInfo;
+import com.yeyintlwin.musicsstore.ui.fragment.download.child.finish.listener.OnDeleteSongListener;
 import com.yeyintlwin.musicsstore.utils.Utils;
-import pl.tajchert.waitingdots.DotsTextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.tajchert.waitingdots.DotsTextView;
 
 public class FinishFragment extends BaseFragment {
 
@@ -77,6 +83,20 @@ public class FinishFragment extends BaseFragment {
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), Utils.getColumn(getActivity(), 260)));
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+            }
+        });
+
+        adapter.setOnDeleteSongListener(new OnDeleteSongListener() {
+            @Override
+            public void onDeleteSong(String absolutePath) {
+                Toast.makeText(getContext(), "deleted: " + absolutePath, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         loadData();
     }
 
@@ -98,31 +118,71 @@ public class FinishFragment extends BaseFragment {
                 break;
             case SHOW_EMPTY:
                 emptyView.setVisibility(View.VISIBLE);
-                //Utils.fontstands(emptyText);
+                Utils.fontStand(emptyText.getText().toString());
                 swipeRefreshLayout.setRefreshing(false);
                 break;
             case SHOW_LOADING:
                 loadingView.setVisibility(View.VISIBLE);
                 loadingDotsText.start();
-                //Utils.fontstands(loadingText);
+                Utils.fontStand(loadingText.getText().toString());
                 swipeRefreshLayout.setRefreshing(true);
                 break;
         }
     }
 
     private void loadData() {
-        viewControl(SHOW_RECYCLER);
-        for (int i = 0; i < 10; i++) {
-            FinishInfo info = new FinishInfo();
-            info.setTitle("Title");
-            info.setArtist("Artist");
-            info.setGenre("Genre");
-            info.setAlbum("Album");
-            info.setPath("path");
+        viewControl(SHOW_LOADING);
 
-            infos.add(info);
+        infos.clear();
+
+        MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();
+
+        ArrayList<String> filePaths;
+        try {
+            filePaths = Utils.getMp3Files(getContext());
+            if (filePaths.isEmpty()) {
+                viewControl(SHOW_EMPTY);
+            } else {
+                viewControl(SHOW_RECYCLER);
+            }
+            for (String absolutePath : filePaths) {
+
+                metadataRetriever.setDataSource(absolutePath);
+                String title = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                String artist = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                String genre = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE);
+                String album = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+
+                if (title == null) {
+                    File file = new File(absolutePath);
+                    title = file.getName().substring(0, file.getName().length() - 4);
+                }
+
+                if (artist == null) artist = "<Unknown>";
+                if (genre == null) genre = "<Unknown>";
+                if (album == null) album = "<Unknown>";
+
+                FinishInfo info = new FinishInfo();
+                info.setTitle(title);
+                info.setArtist(artist);
+                info.setGenre(genre);
+                info.setAlbum(album);
+                info.setPath(absolutePath);
+
+                infos.add(info);
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            viewControl(SHOW_EMPTY);
         }
+
+        metadataRetriever.release();
         adapter.setData(infos);
         adapter.notifyDataSetChanged();
+        viewControl(recyclerView.getLayoutManager().getItemCount() == 0 ? SHOW_EMPTY : SHOW_RECYCLER);
+
     }
+
 }

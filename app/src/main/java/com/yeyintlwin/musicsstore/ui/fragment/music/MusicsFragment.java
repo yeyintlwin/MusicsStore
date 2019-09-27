@@ -13,8 +13,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.activity.MainActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
@@ -68,16 +74,12 @@ public class MusicsFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_musics, container, false);
-        init(view);
+        recyclerView = view.findViewById(R.id.music_recyclerView);
+        swipeRefreshLayout = view.findViewById(R.id.music_swipeRefresh);
         return view;
     }
 
-    private void init(View view) {
-        recyclerView = view.findViewById(R.id.music_recyclerView);
-        swipeRefreshLayout = view.findViewById(R.id.music_swipeRefresh);
-    }
-
-    private void test() {
+    private void loadData() {
 
         for (int i = 0; i <= 10; i++) {
             MusicInfo musicInfo = new MusicInfo();
@@ -108,7 +110,7 @@ public class MusicsFragment extends BaseFragment {
         musicAdapter = new MusicAdapter();
         recyclerView.setAdapter(musicAdapter);
 
-        test();
+        loadData();
 
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
