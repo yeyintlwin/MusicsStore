@@ -71,6 +71,9 @@ public class FinishFragment extends BaseFragment {
         loadingText = loadingView.findViewById(R.id.layout_loadingTextView);
         loadingDotsText = loadingView.findViewById(R.id.loading_dotsTextView);
 
+        emptyText.setText(Utils.fontStand(emptyText.getText().toString()));
+        loadingText.setText(Utils.fontStand(loadingText.getText().toString()));
+
         infos = new ArrayList<>();
         adapter = new FinishAdapter();
         recyclerView.setAdapter(adapter);
@@ -156,6 +159,7 @@ public class FinishFragment extends BaseFragment {
             filePaths = Utils.getMp3Files(Objects.requireNonNull(getContext()));
             if (filePaths.isEmpty()) {
                 viewControl(SHOW_EMPTY);
+                return;
             } else {
                 viewControl(SHOW_RECYCLER);
             }

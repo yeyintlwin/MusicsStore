@@ -63,6 +63,9 @@ public class QueueFragment extends BaseFragment {
         loadingText = loadingView.findViewById(R.id.layout_loadingTextView);
         loadingDotsText = loadingView.findViewById(R.id.loading_dotsTextView);
 
+        emptyText.setText(Utils.fontStand(emptyText.getText().toString()));
+        loadingText.setText(Utils.fontStand(loadingText.getText().toString()));
+
         infos = new ArrayList<>();
         adapter = new QueueAdapter();
         recyclerView.setAdapter(adapter);

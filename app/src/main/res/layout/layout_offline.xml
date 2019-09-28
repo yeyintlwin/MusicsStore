@@ -28,7 +28,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/offline_text"/>
+            android:text="@string/offline_layout_text" />
 
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

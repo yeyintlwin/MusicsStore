@@ -1,6 +1,5 @@
 package com.yeyintlwin.musicsstore.ui.fragment.offline;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,8 +11,7 @@ import android.widget.TextView;
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.offline.listener.OnOfflineRetryListener;
-
-import java.util.Objects;
+import com.yeyintlwin.musicsstore.utils.Utils;
 
 public class OfflineFragment extends BaseFragment implements View.OnClickListener {
     private static OfflineFragment offlineFragment;
@@ -35,10 +33,9 @@ public class OfflineFragment extends BaseFragment implements View.OnClickListene
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_offline, container, false);
-        ((TextView) view.findViewById(R.id.fragment_offlineTextView))
-                .setTypeface(Typeface.createFromAsset(Objects.requireNonNull(getContext())
-                                .getAssets(),
-                        "fonts/Zawgyi-One2014.ttf"));
+        TextView offlineText = view.findViewById(R.id.fragment_offlineTextView);
+        offlineText.setText(Utils.fontStand(offlineText.getText().toString()));
+
         (view.findViewById(R.id.fragment_offlineat_markushi_ui_CircleButton))
                 .setOnClickListener(this);
         return view;

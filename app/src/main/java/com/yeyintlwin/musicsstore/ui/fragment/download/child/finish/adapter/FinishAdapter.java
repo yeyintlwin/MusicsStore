@@ -1,9 +1,11 @@
 package com.yeyintlwin.musicsstore.ui.fragment.download.child.finish.adapter;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -45,7 +47,7 @@ public class FinishAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        FinishItemViewHolder itemViewHolder = (FinishItemViewHolder) viewHolder;
+        final FinishItemViewHolder itemViewHolder = (FinishItemViewHolder) viewHolder;
         final FinishInfo downloadedInfo = infos.get(i);
         itemViewHolder.title.setText(downloadedInfo.getTitle());
         itemViewHolder.artist.setText(downloadedInfo.getArtist());
@@ -82,6 +84,8 @@ public class FinishAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     });
                     builder.setNegativeButton("Cancel", null);
                     builder.show();
+                    ((Vibrator) v.getContext().getSystemService(Context.VIBRATOR_SERVICE))
+                            .vibrate(new long[]{0, 50}, -1);
                     return false;
                 }
             });

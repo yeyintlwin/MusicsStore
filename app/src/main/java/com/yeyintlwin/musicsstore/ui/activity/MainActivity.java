@@ -13,15 +13,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.activity.base.BaseActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.AboutsFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.category.CategoriesFragment;
+import com.yeyintlwin.musicsstore.ui.fragment.category.entity.CategoryInfo;
 import com.yeyintlwin.musicsstore.ui.fragment.category.listener.OnFragmentNextStepListener;
 import com.yeyintlwin.musicsstore.ui.fragment.download.DownloadFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.favorite.FavoritesFragment;
@@ -44,8 +47,8 @@ public class MainActivity extends BaseActivity
     public static final int ACTION_MUSICS = R.id.nav_musics;
     public static final int ACTION_ARTIST = R.id.nav_artist;
     public static final int ACTION_GENRE = R.id.nav_genre;
-    public static final int ACTION_ALBUM = R.id.nav_genre;
-    public static final int ACTION_COUNTRY = R.id.nav_album;
+    public static final int ACTION_ALBUM = R.id.nav_album;
+    public static final int ACTION_COUNTRY = R.id.nav_country;
 
     private Stack<Fragment> fragmentStack;
     private MenuItem menuItemCarrier;
@@ -70,6 +73,8 @@ public class MainActivity extends BaseActivity
     private TextView firstStackText;
     private TextView secondStackText;
 
+    private NavigationView navigationView;
+
     private void init() {
         stacksLayout = findViewById(R.id.stacks_view);
         firstStack = stacksLayout.findViewById(R.id.first_layout);
@@ -79,6 +84,8 @@ public class MainActivity extends BaseActivity
         firstStack.setOnClickListener(sbSecondStackClickListener);
 
         tabLayout = findViewById(R.id.main_tabs);
+
+        navigationView = findViewById(R.id.nav_view);
     }
 
     @Override
@@ -92,6 +99,7 @@ public class MainActivity extends BaseActivity
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
@@ -99,11 +107,12 @@ public class MainActivity extends BaseActivity
                 super.onDrawerClosed(drawerView);
 
 
-                int resId = 0;
+                int resId;
                 try {
                     resId = menuItemCarrier.getItemId();
                 } catch (NullPointerException e) {
                     Log.w("log", e.toString());
+                    return;
                 }
 
                 if (isMenuItemSelected)
@@ -144,6 +153,8 @@ public class MainActivity extends BaseActivity
 
         netSections(R.id.nav_home);// Home as default.
         fragmentStack = new Stack<>();
+
+        setFontStand();
     }
 
     private void netSections(final int resId) {
@@ -165,7 +176,7 @@ public class MainActivity extends BaseActivity
                 case R.id.nav_genre:
                 case R.id.nav_album:
                 case R.id.nav_country: {
-                    sbShowHomeLayout();
+                    //sbShowHomeLayout();
                     CategoriesFragment categoriesFragment = CategoriesFragment.getInstance();
                     final Bundle bundle = new Bundle();
                     bundle.putInt(BUNDLE_ACTION_CATEGORY, resId);
@@ -173,13 +184,13 @@ public class MainActivity extends BaseActivity
                     fragmentStoreFirstStack(categoriesFragment);
                     categoriesFragment.setOnFragmentNextStepListener(new OnFragmentNextStepListener() {
                         @Override
-                        public void onNextStep(int action, String categoryId) {
+                        public void onNextStep(int action, CategoryInfo categoryInfo) {
                             MusicsFragment musicsFragment = MusicsFragment.getInstance();
                             Bundle bundle1 = new Bundle();
                             bundle1.putInt(BUNDLE_ACTION_MUSIC, action);
-                            bundle1.putString(BUNDLE_ACTION_SELECTED_ID, categoryId);
+                            bundle1.putString(BUNDLE_ACTION_SELECTED_ID, categoryInfo.getId());
                             musicsFragment.setArguments(bundle1);
-                            fragmentStoreSecondStack(musicsFragment);
+                            fragmentStoreSecondStack(musicsFragment, categoryInfo.getName());
                         }
                     });
                     break;
@@ -217,7 +228,7 @@ public class MainActivity extends BaseActivity
         sbShowFirstStack(Objects.requireNonNull(getSupportActionBar()).getTitle());
     }
 
-    private void fragmentStoreSecondStack(MusicsFragment musicsFragment) {
+    private void fragmentStoreSecondStack(MusicsFragment musicsFragment, String secondStackName) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.main_frame, musicsFragment);
         fragmentStack.lastElement().onPause();
@@ -225,7 +236,7 @@ public class MainActivity extends BaseActivity
         fragmentStack.push(musicsFragment);
         fragmentTransaction.commit();
 
-        sbShowSecondStack("Second Stack");//TODO
+        sbShowSecondStack(secondStackName);
     }
 
     private void fragmentBackFromSecondStack() {
@@ -260,20 +271,29 @@ public class MainActivity extends BaseActivity
 
     }
 
-    private void sbClearAll() {
-        stacksLayout.setVisibility(View.GONE);
+    private void sbClearAll(int itemId) {
+        stacksLayout.setVisibility(isInCategory(itemId) ? View.VISIBLE : View.GONE);
         firstStack.setVisibility(View.GONE);
         secondStack.setVisibility(View.GONE);
+
+    }
+
+    private boolean isInCategory(int id) {
+        return id == R.id.nav_artist ||
+                id == R.id.nav_genre ||
+                id == R.id.nav_album ||
+                id == R.id.nav_country;
+
     }
 
     private void sbClearSecondStack() {
         secondStack.setVisibility(View.GONE);
     }
 
-    private void sbShowHomeLayout() {
-        stacksLayout.setVisibility(View.VISIBLE);
-    }
-
+    /* private void sbShowHomeLayout() {
+         stacksLayout.setVisibility(View.VISIBLE);
+     }
+ */
     private void sbShowFirstStack(CharSequence categoryName) {
         firstStack.setVisibility(View.VISIBLE);
         firstStackText.setText(categoryName);
@@ -294,7 +314,10 @@ public class MainActivity extends BaseActivity
         drawer.closeDrawer(GravityCompat.START);
 
         fragmentStack.clear();//clear stored stack
-        sbClearAll();
+
+
+        sbClearAll(item.getItemId());
+
         tabLayout.setVisibility(View.GONE);
         return true;
     }
@@ -303,5 +326,15 @@ public class MainActivity extends BaseActivity
     public TabLayout getTabLayout() {
         tabLayout.setVisibility(View.VISIBLE);
         return tabLayout;
+    }
+
+    private void setFontStand() {
+        if (Utils.isUnicode()) return;
+        Menu menu = navigationView.getMenu();
+        for (int i = 0; i < menu.size(); i++)
+            menu.getItem(i).setTitle(Utils.fontStand(menu.getItem(i).getTitle().toString()));
+        Menu submenu = menu.getItem(7).getSubMenu();
+        for (int i = 0; i < submenu.size(); i++)
+            submenu.getItem(i).setTitle(Utils.fontStand(submenu.getItem(i).getTitle().toString()));
     }
 }

@@ -10,26 +10,37 @@
     <string name="version">v1.0</string>
     <string name="text_uni">သီဟိုဠ်မှ ဉာဏ်ကြီးရှင်သည် အာယုဝဍ်ဎနဆေးညွှန်းစာကို ဇလွန်ဈေးဘေးဗာဒံပင်ထက် အဓိဋ္ဌာန်လျက် ဂဃနဏဖတ်ခဲ့သည်။</string>
     <string name="text_zawgyi">သီဟိုဠ္မွ ဉာဏ္ႀကီးရွင္သည္ အာယုဝဍ္ဎနေဆးၫႊန္းစာကို ဇလြန္ေဈးေဘးဗာဒံပင္ထက္ အဓိ႒ာန္လ်က္ ဂဃနဏဖတ္ခဲ့သည္။</string>
-    <string name="check_text">မွန္ကန္စြာဖတ္၍ရေသာ စာေၾကာင္း အားေရြးေပးပါ။</string>
+    <string name="check_text">မှန်ကန်စွာဖတ်၍ရသော စာကြောင်း အားရွေးပေးပါ။</string>
     <string name="developer_email">dev.yeyintlwin@gmail.com</string>
     <string name="app_facebook">https://www.facebook.com/myanmarmusics.mm</string>
     <string name="developer_facebook">https://www.facebook.com/yeyintlwin.mm</string>
     <string name="developer_name">Ye Yint Lwin</string>
 
-    <string name="menu_home">မူလေနရာ</string>
-    <string name="menu_musics">ေတးသီခ်င္းမ်ားအားလံုး</string>
-    <string name="menu_artists">အဆိုေတာ္မ်ား</string>
-    <string name="menu_genres">သီခ်င္းအမ်ိဳးအစားမ်ား</string>
-    <string name="menu_albums">အယ္ဘန္မ်ား</string>
-    <string name="menu_countries">ႏိုင္ငံအလိုက္</string>
-    <string name="menu_favorites">လူႀကိဳက္မ်ားေတးသီခ်င္းမ်ား</string>
-    <string name="menu_downloads">ေဒါင္းလုဒ္လုပ္ငန္းစဥ္းမ်ား</string>
-    <string name="menu_settings">အျပင္အဆင္</string>
-    <string name="menu_abouts">ဒီအက္ပ္ေလးအေၾကာင္း</string>
-    <string name="menu_other_options">အျခားေရြးခ်ယ္စရာမ်ား</string>
+    <string name="menu_home">မူလနေရာ</string>
+    <string name="menu_musics">တေးသီချင်းများအားလုံး</string>
+    <string name="menu_artists">အဆိုတော်များ</string>
+    <string name="menu_genres">သီချင်းအမျိုးအစားများ</string>
+    <string name="menu_albums">အယ်ဘန်များ</string>
+    <string name="menu_countries">နိုင်ငံအလိုက်</string>
+    <string name="menu_favorites">လူကြိုက်များတေးသီချင်းများ</string>
+    <string name="menu_downloads">ဒေါင်းလုဒ်လုပ်ငန်းစဉ်းများ</string>
+    <string name="menu_settings">အပြင်အဆင်</string>
+    <string name="menu_abouts">ဒီအက်ပ်လေးအကြောင်း</string>
+    <string name="menu_other_options">အခြားရွေးချယ်စရာများ</string>
 
-    <string name="loading_songs">ဖတ္ေနသည္</string>
-    <string name="empty_songs">သီခ်င္းမရွိပါ။</string>
+    <string name="loading_songs">ဖတ်နေသည်</string>
+    <string name="empty_songs">သီချင်းမရှိပါ။</string>
 
-    <string name="offline_text">အင္တာနက္မရပါ!</string>
+    <string name="empty_artist">အဆိုတော်များမတွ့ပါ။</string>
+    <string name="empty_genre">သီချင်းအမျိုးအစားများမတွေ့ပါ။</string>
+    <string name="empty_album">အယ်ဘန်များမတွေ့ပါ။</string>
+    <string name="empty_country">နိုင်ငံများမတွေ့ပါ။</string>
+
+    <string name="offline_layout_text">ချိတ်ဆက်မှုမအောင်မြင်ပါ!</string>
+    <string name="offline_text">အင်တာနက်မရပါ!</string>
+    <string name="about_license"><u>Open Source Licenses</u></string>
+    <string name="tab_downloading">ဒေါင်းလုဒ်လုပ်ဆောင်ဆဲ</string>
+    <string name="tab_downloaded">သိမ်းထားသောသီချင်းများ</string>
+
+
 </resources>

@@ -63,9 +63,26 @@ public class MusicsFragment extends BaseFragment {
                 String selectedId = bundle.getString(MainActivity.BUNDLE_ACTION_SELECTED_ID);
 
                 //TODO here is important place.
+                Toast.makeText(getContext(), "From MusicFragment\naction: " + getSomething(action)
+                        + "\nid: " + selectedId, Toast.LENGTH_LONG).show();
             }
         }
 
+    }
+
+    private String getSomething(int action) {
+        switch (action) {
+            case MainActivity.ACTION_ARTIST:
+                return "Artist";
+            case MainActivity.ACTION_GENRE:
+                return "Genre";
+            case MainActivity.ACTION_ALBUM:
+                return "Album";
+            case MainActivity.ACTION_COUNTRY:
+                return "Country";
+            default:
+                return "";
+        }
     }
 
     @SuppressLint("SetTextI18n")

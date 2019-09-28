@@ -85,7 +85,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Open Source Licenses"
+            android:text="@string/about_license"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textStyle="italic"
             tools:ignore="HardcodedText" />

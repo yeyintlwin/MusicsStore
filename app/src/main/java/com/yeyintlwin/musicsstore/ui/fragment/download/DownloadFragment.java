@@ -12,12 +12,16 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.activity.MainActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.download.adapter.TabsItemPagerAdapter;
 import com.yeyintlwin.musicsstore.ui.fragment.download.child.finish.FinishFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.download.child.queue.QueueFragment;
+import com.yeyintlwin.musicsstore.utils.Utils;
+
+import java.util.Objects;
 
 public class DownloadFragment extends BaseFragment {
     private static DownloadFragment downloadFragment;
@@ -38,8 +42,8 @@ public class DownloadFragment extends BaseFragment {
         adapter = new TabsItemPagerAdapter(getChildFragmentManager());
 
 
-        adapter.addFragment(QueueFragment.getInstance(), "Queue");
-        adapter.addFragment(FinishFragment.getInstance(), "Finish");
+        adapter.addFragment(QueueFragment.getInstance(), Utils.fontStand(getString(R.string.tab_downloading)));
+        adapter.addFragment(FinishFragment.getInstance(), Utils.fontStand(getString(R.string.tab_downloaded)));
     }
 
     @Nullable
@@ -52,16 +56,17 @@ public class DownloadFragment extends BaseFragment {
         final TabLayout tabLayout = tabLayoutSetupCallback.getTabLayout();
         if (tabLayout != null) {
             tabLayout.setupWithViewPager(viewPager);
-            tabLayout.getTabAt(0).setIcon(R.drawable.ic_menu_download);
-            tabLayout.getTabAt(1).setIcon(R.drawable.ic_menu_download);
-            tabLayout.getTabAt(1).getIcon().setColorFilter(Color.parseColor("#88ffffff"), PorterDuff.Mode.SRC_IN);
+            Objects.requireNonNull(tabLayout.getTabAt(0)).setIcon(R.drawable.ic_menu_download);
+            Objects.requireNonNull(tabLayout.getTabAt(1)).setIcon(R.drawable.ic_menu_download);
+            Objects.requireNonNull(Objects.requireNonNull(tabLayout.getTabAt(1)).getIcon())
+                    .setColorFilter(Color.parseColor("#88ffffff"), PorterDuff.Mode.SRC_IN);
+            //noinspection deprecation
             tabLayout.setOnTabSelectedListener(
                     new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
 
                         @Override
                         public void onTabSelected(TabLayout.Tab tab) {
                             super.onTabSelected(tab);
-                            if (tab == null) return;
                             Drawable icon = tab.getIcon();
                             if (icon == null) return;
                             icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
@@ -70,7 +75,8 @@ public class DownloadFragment extends BaseFragment {
                         @Override
                         public void onTabUnselected(TabLayout.Tab tab) {
                             super.onTabUnselected(tab);
-                            tab.getIcon().setColorFilter(Color.parseColor("#88ffffff"), PorterDuff.Mode.SRC_IN);
+                            Objects.requireNonNull(tab.getIcon()).setColorFilter(
+                                    Color.parseColor("#88ffffff"), PorterDuff.Mode.SRC_IN);
                         }
 
                         @Override
