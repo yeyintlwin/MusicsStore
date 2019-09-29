@@ -12,6 +12,7 @@ public class MusicInfo implements Serializable {
     private String country;
     private String cover;
     private String link;
+    private String counter;
 
     public MusicInfo() {
 
@@ -79,5 +80,13 @@ public class MusicInfo implements Serializable {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getCounter() {
+        return counter;
+    }
+
+    public void setCounter(String counter) {
+        this.counter = counter;
     }
 }

@@ -79,7 +79,29 @@ public class CategoriesFragment extends BaseFragment {
         return new CategoriesFragment();
     }
 
-    private void init(View view) {
+    public void setOnFragmentNextStepListener(OnFragmentNextStepListener listener) {
+        mListener = listener;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+        Bundle bundle = getArguments();
+        if (bundle != null) action = bundle.getInt(MainActivity.BUNDLE_ACTION_CATEGORY);
+
+        categoryInfoList = new ArrayList<>();
+        categoryAdapter = new CategoryAdapter();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_categories, container, false);
         recyclerView = view.findViewById(R.id.cat_recyclerView);
         swipeRefreshLayout = view.findViewById(R.id.cat_swipeRefresh);
 
@@ -91,6 +113,88 @@ public class CategoriesFragment extends BaseFragment {
         emptyView = view.findViewById(R.id.cat_layout_empty);
         emptyText = emptyView.findViewById(R.id.layout_emptyTextView);
         emptyLogo = emptyView.findViewById(R.id.layout_emptyImageView);
+
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(500);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
+        //recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Utils.getColum(getActivity(), 230), 1));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        recyclerView.setAdapter(categoryAdapter);
+        categoryAdapter.setOnCategoryItemClickListener(new OnCategoryItemClickListener() {
+            @Override
+            public void onCategoryItemClick(CategoryInfo categoryInfo) {
+                if (mListener != null) mListener.onNextStep(action, categoryInfo);
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                stopRequest();
+                loadData(searchQuery);
+            }
+        });
+
+        setFontStand();
+        loadData(searchQuery);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.menu_search);
+
+        SearchManager searchManager = (SearchManager) Objects.requireNonNull(
+                getActivity()).getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                searchQuery = Utils.isUnicode() ? s : Rabbit.zg2uni(s);
+                stopRequest();
+                loadData(searchQuery);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return true;
+            }
+        });
+
+        if (!searchQuery.equals("")) {
+            if (!menuItem.isActionViewExpanded()) menuItem.expandActionView();
+            searchView.setQuery(searchQuery, true);
+            searchView.clearFocus();
+        }
+
+        menuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                searchQuery = "";
+                stopRequest();
+                loadData(searchQuery);
+                return true;
+            }
+        });
 
     }
 
@@ -149,57 +253,20 @@ public class CategoriesFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+    private String getTargetType(int action) {
+        switch (action) {
+            case MainActivity.ACTION_ARTIST:
+                return "0";
+            case MainActivity.ACTION_GENRE:
+                return "1";
+            case MainActivity.ACTION_ALBUM:
+                return "2";
+            case MainActivity.ACTION_COUNTRY:
+                return "3";
+            default:
+                return "";
+        }
 
-        categoryInfoList = new ArrayList<>();
-        categoryAdapter = new CategoryAdapter();
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        Bundle bundle = getArguments();
-        if (bundle != null) action = bundle.getInt(MainActivity.BUNDLE_ACTION_CATEGORY);
-
-
-        View view = inflater.inflate(R.layout.fragment_categories, container, false);
-        init(view);
-        recyclerView.setAdapter(categoryAdapter);
-        categoryAdapter.setOnCategoryItemClickListener(new OnCategoryItemClickListener() {
-            @Override
-            public void onCategoryItemClick(CategoryInfo categoryInfo) {
-                if (mListener != null) mListener.onNextStep(action, categoryInfo);
-            }
-        });
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemViewCacheSize(500);
-        recyclerView.setDrawingCacheEnabled(true);
-        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
-        //recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Utils.getColum(getActivity(), 230), 1));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                stopRequest();
-                loadData(searchQuery);
-            }
-        });
-
-        setFontStand();
-        loadData(searchQuery);
     }
 
     private void stopRequest() {
@@ -207,59 +274,6 @@ public class CategoriesFragment extends BaseFragment {
         categoryInfoList.clear();
         categoryAdapter.setData(categoryInfoList);
         categoryAdapter.notifyDataSetChanged();
-    }
-
-    public void setOnFragmentNextStepListener(OnFragmentNextStepListener listener) {
-        mListener = listener;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.main, menu);
-
-        MenuItem menuItem = menu.findItem(R.id.menu_search);
-
-        SearchManager searchManager = (SearchManager) Objects.requireNonNull(
-                getActivity()).getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                searchQuery = Utils.isUnicode() ? s : Rabbit.zg2uni(s);
-                stopRequest();
-                loadData(searchQuery);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return true;
-            }
-        });
-
-        if (!searchQuery.equals("")) {
-            if (!menuItem.isActionViewExpanded()) menuItem.expandActionView();
-            searchView.setQuery(searchQuery, true);
-            searchView.clearFocus();
-        }
-
-        menuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                return true;
-            }
-
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-                searchQuery = "";
-                stopRequest();
-                loadData(searchQuery);
-                return true;
-            }
-        });
-
     }
 
     private void loadData(final String query) {
@@ -317,20 +331,5 @@ public class CategoriesFragment extends BaseFragment {
 
     }
 
-    private String getTargetType(int action) {
-        switch (action) {
-            case MainActivity.ACTION_ARTIST:
-                return "0";
-            case MainActivity.ACTION_GENRE:
-                return "1";
-            case MainActivity.ACTION_ALBUM:
-                return "2";
-            case MainActivity.ACTION_COUNTRY:
-                return "3";
-            default:
-                return "";
-        }
-
-    }
 
 }

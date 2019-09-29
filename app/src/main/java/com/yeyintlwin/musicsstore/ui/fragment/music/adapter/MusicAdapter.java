@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.fragment.music.adapter.viewholder.MusicItemViewHolder;
 import com.yeyintlwin.musicsstore.ui.fragment.music.adapter.viewholder.ProgressViewHolder;
@@ -51,7 +52,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         musicItemViewHolder.genre.setText(musicInfo.getGenre());
         musicItemViewHolder.album.setText(musicInfo.getAlbum());
         musicItemViewHolder.country.setText(musicInfo.getCountry());
-        //musicItemViewHolder.counter.setText(String.valueOf(musicInfo.getCounter()));
+        musicItemViewHolder.counter.setText(musicInfo.getCounter());
         //musicItemViewHolder.persize.setText(musicInfo.getDownloadPerSize());
         //musicItemViewHolder.progress.setProgress(musicInfo.getProgress());
         //musicItemViewHolder.status.setText(musicInfo.getStatusEmoji());
