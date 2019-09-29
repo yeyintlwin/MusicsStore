@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.URLUtil;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -202,8 +201,11 @@ public class MusicsFragment extends BaseFragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
                 viewControl(SHOW_LOADING);
+                if (!Utils.isUnicode()) s = Rabbit.zg2uni(s);
+                searchQuery = s;
+                stopRequest();
+                loadData(searchQuery, startPoint);
                 return true;
             }
 
@@ -221,6 +223,10 @@ public class MusicsFragment extends BaseFragment {
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
+                viewControl(SHOW_LOADING);
+                searchQuery = "";
+                stopRequest();
+                loadData(searchQuery, startPoint);
                 return true;
             }
         });
