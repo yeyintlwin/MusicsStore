@@ -72,7 +72,7 @@ public class MusicsFragment extends BaseFragment {
     private Activity activity;
     private boolean canRemove = false;
     private boolean isLoading = false;
-    private boolean requestFromLoadmore = false;
+    private boolean requestFromLoadMore = false;
     private int startPoint = 0;
     private String searchQuery = "";
     private int action;
@@ -169,7 +169,7 @@ public class MusicsFragment extends BaseFragment {
 
                         Log.w("load_more", "load now");
                         insertLoadMore();
-                        requestFromLoadmore = true;
+                        requestFromLoadMore = true;
                         if (startPoint < 0) startPoint = 0;
                         startPoint = startPoint + Integer.parseInt(
                                 MainController.getString("loadMoreLimit", "20"));
@@ -350,29 +350,29 @@ public class MusicsFragment extends BaseFragment {
                             musicAdapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
-                            if (requestFromLoadmore)
+                            if (requestFromLoadMore)
                                 startPoint = firstItem - Integer.parseInt(
                                         MainController.getString("loadMoreLimit", "20"));
                             e.printStackTrace();
                         }
                         viewControl(Objects.requireNonNull(recyclerView.getLayoutManager())
                                 .getItemCount() == 0 ? SHOW_EMPTY : SHOW_RECYCLER);
-                        requestFromLoadmore = false;
+                        requestFromLoadMore = false;
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 removeLoadMore();
-                if (requestFromLoadmore) {
-                    startPoint = startPoint - Integer.parseInt(
+                if (requestFromLoadMore) {
+                    startPoint = firstItem - Integer.parseInt(
                             MainController.getString("loadMoreLimit", "20"));
                     viewControl(Objects.requireNonNull(recyclerView.getLayoutManager())
                             .getItemCount() == 0 ? SHOW_EMPTY : SHOW_RECYCLER);
                 } else {
                     viewControl(SHOW_OFFLINE);
                 }
-                requestFromLoadmore = false;
+                requestFromLoadMore = false;
             }
         }) {
             @Override
