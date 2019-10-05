@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.fragment.favorite.adapter.viewholder.FavoriteItemViewHolder;
 import com.yeyintlwin.musicsstore.ui.fragment.favorite.entity.FavoriteInfo;
@@ -40,7 +41,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         favoriteItemViewHolder.genre.setText(favoriteInfo.getGenre());
         favoriteItemViewHolder.album.setText(favoriteInfo.getAlbum());
         favoriteItemViewHolder.country.setText(favoriteInfo.getCountry());
-        //favoriteItemViewHolder.counter.setText(String.valueOf(favoriteInfo.getCounter()));
+        favoriteItemViewHolder.counter.setText(String.valueOf(favoriteInfo.getCounter()));
         //favoriteItemViewHolder.persize.setText(favoriteInfo.getDownloadPerSize());
         //favoriteItemViewHolder.progress.setProgress(favoriteInfo.getProgress());
         //favoriteItemViewHolder.status.setText(favoriteInfo.getStatusEmoji());

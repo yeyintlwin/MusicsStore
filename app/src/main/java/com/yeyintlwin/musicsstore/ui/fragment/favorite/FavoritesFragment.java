@@ -8,19 +8,36 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.yeyintlwin.musicsstore.Constants;
+import com.yeyintlwin.musicsstore.MainController;
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.favorite.adapter.FavoriteAdapter;
 import com.yeyintlwin.musicsstore.ui.fragment.favorite.entity.FavoriteInfo;
+import com.yeyintlwin.musicsstore.utils.Rabbit;
 import com.yeyintlwin.musicsstore.utils.Utils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pl.tajchert.waitingdots.DotsTextView;
 
@@ -45,7 +62,7 @@ public class FavoritesFragment extends BaseFragment {
 
     private List<FavoriteInfo> infos;
     private FavoriteAdapter adapter;
-
+    private RequestQueue requestQueue;
 
     public FavoritesFragment() {
     }
@@ -90,6 +107,13 @@ public class FavoritesFragment extends BaseFragment {
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(
                 Utils.getColumn(getActivity(), 300), 1));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                stopRequest();
+                loadData();
+            }
+        });
         loadData();
     }
 
@@ -130,19 +154,71 @@ public class FavoritesFragment extends BaseFragment {
         }
     }
 
-    private void loadData() {
-        viewControl(SHOW_RECYCLER);
-        for (int i = 0; i < 10; i++) {
-            FavoriteInfo info = new FavoriteInfo();
-            info.setId(Integer.toString(i));
-            info.setTitle("Title");
-            info.setArtist("Artist");
-            info.setGenre("Genre");
-            info.setAlbum("Album");
-            info.setCountry("Country");
-            infos.add(info);
-        }
+    private void stopRequest() {
+        requestQueue.stop();
+        infos.clear();
         adapter.setData(infos);
         adapter.notifyDataSetChanged();
+    }
+
+    private void loadData() {
+        viewControl(SHOW_LOADING);
+        requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.API_V2
+                + "favorites.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                response = Utils.isUnicode() ? response : Rabbit.uni2zg(response);
+                Log.w("f_response", response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = new JSONArray(jsonObject.getString("musics"));
+                    if (jsonArray.length() == 0) {
+                        viewControl(SHOW_EMPTY);
+                        return;
+                    } else {
+                        viewControl(SHOW_RECYCLER);
+                    }
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        String link = object.getString("link");
+                        if (!URLUtil.isValidUrl(link)) continue;
+                        FavoriteInfo info = new FavoriteInfo();
+                        info.setId(object.getString("id"));
+                        info.setTitle(object.getString("title"));
+                        info.setArtist(object.getString("artist"));
+                        info.setGenre(object.getString("genre"));
+                        info.setAlbum(object.getString("album"));
+                        info.setCountry(object.getString("country"));
+                        info.setCover(object.getString("cover"));
+                        info.setLink(link);
+                        String counter = object.getString("counter");
+                        info.setCounter(counter.equals("null") ? "0" : counter);
+                        infos.add(info);
+                    }
+                    adapter.setData(infos);
+                    adapter.notifyDataSetChanged();
+                    //viewControl(recyclerView.getLayoutManager().getItemCount() == 0 ? SHOW_EMPTY : SHOW_RECYCLER);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                viewControl(SHOW_OFFLINE);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> hashMap = new HashMap<>();
+                hashMap.put("limit", MainController.getString("favoritesLimit", "20"));
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
+        requestQueue.start();
+
     }
 }

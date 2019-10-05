@@ -12,6 +12,7 @@ public class FavoriteInfo implements Serializable {
     private String country;
     private String cover;
     private String link;
+    private String counter;
 
     public FavoriteInfo() {
 
@@ -81,4 +82,11 @@ public class FavoriteInfo implements Serializable {
         this.link = link;
     }
 
+    public String getCounter() {
+        return counter;
+    }
+
+    public void setCounter(String counter) {
+        this.counter = counter;
+    }
 }

@@ -328,14 +328,15 @@ public class MusicsFragment extends BaseFragment {
                             JSONObject jsonObject = new JSONObject(response);
                             numRows = Integer.parseInt(jsonObject.getString("num_rows"));
                             String objectString = jsonObject.getString("musics");
-                            objectString = Utils.isUnicode() ? objectString : Rabbit.zg2uni(objectString);
+                            objectString = Utils.isUnicode() ? objectString : Rabbit.uni2zg(objectString);
                             Log.w("response", objectString);
                             JSONArray jsonArray = new JSONArray(objectString);
 
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                if (!URLUtil.isValidUrl(object.getString("link"))) {
+                                String link = object.getString("link");
+                                if (!URLUtil.isValidUrl(link)) {
                                     numRows--;
                                     continue;
                                 }
@@ -347,9 +348,9 @@ public class MusicsFragment extends BaseFragment {
                                 musicInfo.setAlbum(object.getString("album"));
                                 musicInfo.setCountry(object.getString("country"));
                                 musicInfo.setCover(object.getString("cover"));
-                                musicInfo.setLink(object.getString("link"));
-                                musicInfo.setCounter(object.getString("counter")
-                                        .equals("null") ? "0" : object.getString("counter"));
+                                musicInfo.setLink(link);
+                                String counter = object.getString("counter");
+                                musicInfo.setCounter(counter.equals("null") ? "0" : counter);
                                 musicInfoList.add(musicInfo);
                             }
                             musicAdapter.setData(musicInfoList);
@@ -385,7 +386,7 @@ public class MusicsFragment extends BaseFragment {
             protected Map<String, String> getParams() {
                 Map<String, String> hashMap = new HashMap<>();
                 hashMap.put("from", Integer.toString(firstItem));
-                hashMap.put("limit", MainController.getString("", "20"));
+                hashMap.put("limit", MainController.getString("loadMoreLimit", "20"));
                 hashMap.put("title", query);
 
                 if (isFromCategory(action)) {

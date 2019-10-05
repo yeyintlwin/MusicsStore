@@ -283,7 +283,7 @@ public class CategoriesFragment extends BaseFragment {
                 Constants.API_V2 + "categories.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                response = Utils.fontStand(response);
+                response = Utils.isUnicode() ? response : Rabbit.uni2zg(response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("category");
@@ -306,7 +306,7 @@ public class CategoriesFragment extends BaseFragment {
                     categoryAdapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
-                    viewControl(SHOW_OFFLINE);
+                    //viewControl(SHOW_OFFLINE);
                     e.printStackTrace();
                     Log.w("Fuck", e.toString());
                 }
