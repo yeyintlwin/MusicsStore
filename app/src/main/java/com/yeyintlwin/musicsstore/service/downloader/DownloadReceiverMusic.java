@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.yeyintlwin.musicsstore.ui.fragment.music.adapter.viewholder.MusicItemViewHolder;
@@ -21,8 +22,8 @@ public class DownloadReceiverMusic extends BroadcastReceiver {
     }
 
     public static DownloadReceiverMusic getInstance() {
-        if (receiverMusic == null)
-            receiverMusic = new DownloadReceiverMusic();
+        // if (receiverMusic == null)
+        receiverMusic = new DownloadReceiverMusic();
         return receiverMusic;
     }
 
@@ -34,7 +35,7 @@ public class DownloadReceiverMusic extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-
+        Log.w("DownloadReceiverMusic", "onReceive()");
         String action = intent.getAction();
         if (action != null && action.equals(DownloadCallBack.ACTION_DOWNLOAD_BROAD_CAST)) {
             MusicInfo musicInfo = (MusicInfo) intent.getSerializableExtra(DownloadService.EXTRA_INFO);
@@ -98,7 +99,7 @@ public class DownloadReceiverMusic extends BroadcastReceiver {
         int firstItemPosition = Utils.min(firstItemsList);
         int lastItemPosition = Utils.max(lastItemsList);
         for (int i = firstItemPosition; i <= lastItemPosition; i++) {
-            MusicItemViewHolder holder = null;
+            MusicItemViewHolder holder;
             try {
                 holder = (MusicItemViewHolder) mRecyclerView.findViewHolderForLayoutPosition(i);
             } catch (ClassCastException e) {

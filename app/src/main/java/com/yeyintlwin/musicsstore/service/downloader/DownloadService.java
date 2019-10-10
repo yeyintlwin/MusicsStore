@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.aspsine.multithreaddownload.DownloadManager;
 import com.aspsine.multithreaddownload.DownloadRequest;
@@ -42,7 +43,7 @@ public class DownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        Log.w("DownloadService", "onStartCommand()");
         if (intent != null) {
             MusicInfo info = (MusicInfo) intent.getSerializableExtra(EXTRA_INFO);
             String link = info.getLink();

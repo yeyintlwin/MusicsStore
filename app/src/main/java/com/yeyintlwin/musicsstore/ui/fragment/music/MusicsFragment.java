@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -28,13 +30,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.aspsine.multithreaddownload.DownloadInfo;
+import com.aspsine.multithreaddownload.DownloadManager;
 import com.yeyintlwin.musicsstore.Constants;
 import com.yeyintlwin.musicsstore.MainController;
 import com.yeyintlwin.musicsstore.R;
+import com.yeyintlwin.musicsstore.service.downloader.DownloadCallBack;
+import com.yeyintlwin.musicsstore.service.downloader.DownloadReceiverMusic;
+import com.yeyintlwin.musicsstore.service.downloader.DownloadServiceManager;
 import com.yeyintlwin.musicsstore.ui.activity.MainActivity;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.music.adapter.MusicAdapter;
 import com.yeyintlwin.musicsstore.ui.fragment.music.entity.MusicInfo;
+import com.yeyintlwin.musicsstore.ui.fragment.music.listener.OnDownloadBtnClickListener;
 import com.yeyintlwin.musicsstore.utils.Rabbit;
 import com.yeyintlwin.musicsstore.utils.Utils;
 
@@ -51,11 +59,13 @@ import java.util.Objects;
 import pl.tajchert.waitingdots.DotsTextView;
 
 public class MusicsFragment extends BaseFragment {
+
     private final int SHOW_RECYCLER = 0;
     private final int SHOW_EMPTY = 1;
     private final int SHOW_OFFLINE = 2;
     private final int SHOW_LOADING = 3;
 
+    private DownloadReceiverMusic downloadReceiverMusic;
     private View emptyView;
     private View offlineView;
     private View loadingView;
@@ -63,7 +73,6 @@ public class MusicsFragment extends BaseFragment {
     private TextView offlineText;
     private TextView loadingText;
     private DotsTextView loadingDotsText;
-
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<MusicInfo> musicInfoList;
@@ -124,7 +133,6 @@ public class MusicsFragment extends BaseFragment {
         return view;
     }
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -176,6 +184,18 @@ public class MusicsFragment extends BaseFragment {
                     }
 
                 }
+            }
+        });
+
+        musicAdapter.setOnDownloadBtnClickListener(new OnDownloadBtnClickListener() {
+            @Override
+            public void onDownloadAndResume(MusicInfo musicInfo) {
+                DownloadServiceManager.getInstance(getContext()).startDownload(musicInfo);
+            }
+
+            @Override
+            public void onPause(MusicInfo musicInfo) {
+                DownloadServiceManager.getInstance(getContext()).pauseDownload(musicInfo);
             }
         });
     }
@@ -297,7 +317,6 @@ public class MusicsFragment extends BaseFragment {
         return action != MainActivity.ACTION_MUSICS;
     }
 
-
     private String getTargetType(int action) {
         switch (action) {
             case MainActivity.ACTION_ARTIST:
@@ -332,7 +351,7 @@ public class MusicsFragment extends BaseFragment {
                             Log.w("response", objectString);
                             JSONArray jsonArray = new JSONArray(objectString);
 
-
+                            DownloadManager downloadManager = DownloadManager.getInstance();
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 String link = object.getString("link");
@@ -351,6 +370,12 @@ public class MusicsFragment extends BaseFragment {
                                 musicInfo.setLink(link);
                                 String counter = object.getString("counter");
                                 musicInfo.setCounter(counter.equals("null") ? "0" : counter);
+
+                                DownloadInfo downloadInfo = downloadManager.getDownloadInfo(link);
+                                if (downloadInfo != null) {
+                                    musicInfo.setProgress(downloadInfo.getProgress());
+                                    musicInfo.setPerSize(Utils.getDownloadPerSize(downloadInfo.getFinished(), downloadInfo.getLength()));
+                                }
                                 musicInfoList.add(musicInfo);
                             }
                             musicAdapter.setData(musicInfoList);
@@ -398,6 +423,27 @@ public class MusicsFragment extends BaseFragment {
         };
         requestQueue.add(stringRequest);
         requestQueue.start();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.w("MusicFragment", "onResume()");
+        downloadReceiverMusic = DownloadReceiverMusic.getInstance().setRecyclerView(recyclerView);
+        // downloadReceiverMusic = new DownloadReceiverMusic(recyclerView);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(DownloadCallBack.ACTION_DOWNLOAD_BROAD_CAST);
+        LocalBroadcastManager.getInstance(Objects.requireNonNull(getContext()))
+                .registerReceiver(downloadReceiverMusic, intentFilter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.w("MusicFragment", "onPause()");
+        if (downloadReceiverMusic != null)
+            LocalBroadcastManager.getInstance(Objects.requireNonNull(getContext()))
+                    .unregisterReceiver(downloadReceiverMusic);
     }
 
 }

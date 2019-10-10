@@ -1,5 +1,7 @@
 package com.yeyintlwin.musicsstore.ui.fragment.music.entity;
 
+import com.yeyintlwin.musicsstore.MainController;
+
 import java.io.Serializable;
 
 public class MusicInfo implements Serializable {
@@ -22,7 +24,6 @@ public class MusicInfo implements Serializable {
     private String link;
     private String counter;
 
-    private int status;
     private int progress;
     private String perSize;
 
@@ -104,11 +105,11 @@ public class MusicInfo implements Serializable {
     }
 
     public int getStatus() {
-        return status;
+        return MainController.getInt("status_" + getId(), STATUS_NOT_DOWNLOAD);
     }
 
     public void setStatus(int status) {
-        this.status = status;
+        MainController.putInt("status_" + getId(), status);
     }
 
     public int getProgress() {

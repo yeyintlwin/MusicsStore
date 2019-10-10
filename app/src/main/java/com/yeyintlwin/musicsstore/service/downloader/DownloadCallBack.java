@@ -8,10 +8,12 @@ import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.aspsine.multithreaddownload.CallBack;
 import com.aspsine.multithreaddownload.DownloadException;
+import com.aspsine.multithreaddownload.DownloadManager;
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.fragment.music.entity.MusicInfo;
 import com.yeyintlwin.musicsstore.utils.Utils;
@@ -104,6 +106,9 @@ public class DownloadCallBack implements CallBack {
 
             Toast.makeText(mContext, mMusicInfo.getTitle() + ".mp3 is download complete.", Toast.LENGTH_SHORT).show();
             ((Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(new long[]{0, 50, 100, 100, 100, 100}, -1);
+
+            //Delete item data from downloader database
+            DownloadManager.getInstance().delete(mMusicInfo.getLink());
         }
     }
 
@@ -140,6 +145,7 @@ public class DownloadCallBack implements CallBack {
 
     @Override
     public void onFailed(DownloadException e) {
+        Log.w("DownloadCallBack", e);
         mMusicInfo.setStatus(MusicInfo.STATUS_DOWNLOAD_ERROR);
         mMusicInfo.setPerSize("");
         sendBroadCast(mMusicInfo);
@@ -155,8 +161,10 @@ public class DownloadCallBack implements CallBack {
     }
 
     private void sendBroadCast(MusicInfo info) {
+        Log.w("DownloadCallBack", "sendBroadCast()\n Title -> " + info.getTitle() + "\nStatus -> " + info.getStatusText());
         Intent intent = new Intent();
-        intent.putExtra(ACTION_DOWNLOAD_BROAD_CAST, info);
+        intent.setAction(ACTION_DOWNLOAD_BROAD_CAST);
+        intent.putExtra(DownloadService.EXTRA_INFO, info);
         broadcastManager.sendBroadcast(intent);
     }
 }
