@@ -52,6 +52,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.yeyintlwin.musicsstore.ui.activity.MainActivity" />
         </activity>
+
+        <service android:name=".service.downloader.DownloadService" />
     </application>
 
 

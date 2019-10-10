@@ -4,7 +4,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 
+import com.squareup.picasso.Picasso;
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.fragment.music.adapter.viewholder.MusicItemViewHolder;
 import com.yeyintlwin.musicsstore.ui.fragment.music.adapter.viewholder.ProgressViewHolder;
@@ -53,13 +55,18 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         musicItemViewHolder.album.setText(musicInfo.getAlbum());
         musicItemViewHolder.country.setText(musicInfo.getCountry());
         musicItemViewHolder.counter.setText(musicInfo.getCounter());
-        //musicItemViewHolder.persize.setText(musicInfo.getDownloadPerSize());
-        //musicItemViewHolder.progress.setProgress(musicInfo.getProgress());
-        //musicItemViewHolder.status.setText(musicInfo.getStatusEmoji());
-        //musicItemViewHolder.download.setText(musicInfo.getButtonText());
-        //musicItemViewHolder.info = musicInfo;
 
-        musicItemViewHolder.cover.setImageResource(R.drawable.ic_launcher_background);
+
+        if (URLUtil.isValidUrl(musicInfo.getCover()))
+            Picasso.get().load(musicInfo.getCover()).error(R.drawable.cover).fit().centerCrop().into(musicItemViewHolder.cover);
+        else
+            musicItemViewHolder.cover.setImageResource(R.drawable.cover);
+
+        /*musicItemViewHolder.perSize.setText(musicInfo.getDownloadPerSize());
+        musicItemViewHolder.progress.setProgress(musicInfo.getProgress());
+        musicItemViewHolder.status.setText(musicInfo.getStatusEmoji());
+        musicItemViewHolder.download.setText(musicInfo.getButtonText());*/
+        musicItemViewHolder.info = musicInfo;
     }
 
     @Override

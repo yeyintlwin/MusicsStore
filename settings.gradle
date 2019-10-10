@@ -1,1 +1,1 @@
-include ':app', ':dots_text'
+include ':app', ':dots_text', ':downloader'

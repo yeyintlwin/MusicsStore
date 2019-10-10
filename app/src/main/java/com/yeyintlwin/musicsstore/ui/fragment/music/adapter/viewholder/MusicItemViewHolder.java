@@ -7,7 +7,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.yeyintlwin.musicsstore.R;
+import com.yeyintlwin.musicsstore.ui.fragment.music.entity.MusicInfo;
 
 public class MusicItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -20,9 +22,11 @@ public class MusicItemViewHolder extends RecyclerView.ViewHolder {
     public TextView download;
     public TextView counter;
     public TextView status;
-    public TextView persize;
+    public TextView perSize;
     public ProgressBar progress;
     public RelativeLayout progressLayout;
+
+    public MusicInfo info;
 
     public MusicItemViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -33,7 +37,7 @@ public class MusicItemViewHolder extends RecyclerView.ViewHolder {
         album = itemView.findViewById(R.id.itemmusicTextViewAlbum);
         country = itemView.findViewById(R.id.itemmusicTextViewCountry);
         counter = itemView.findViewById(R.id.itemmusicTextViewCounter);
-        persize = itemView.findViewById(R.id.itemmusicTextViewPerSize);
+        perSize = itemView.findViewById(R.id.itemmusicTextViewPerSize);
         progress = itemView.findViewById(R.id.itemmusicProgressBar);
         download = itemView.findViewById(R.id.itemmusicTextViewDownload);
         status = itemView.findViewById(R.id.itemmusicTextViewStatus);

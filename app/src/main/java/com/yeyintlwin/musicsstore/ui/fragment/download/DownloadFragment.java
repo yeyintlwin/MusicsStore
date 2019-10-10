@@ -41,7 +41,6 @@ public class DownloadFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         adapter = new TabsItemPagerAdapter(getChildFragmentManager());
 
-
         adapter.addFragment(QueueFragment.getInstance(), Utils.fontStand(getString(R.string.tab_downloading)));
         adapter.addFragment(FinishFragment.getInstance(), Utils.fontStand(getString(R.string.tab_downloaded)));
     }
@@ -57,7 +56,7 @@ public class DownloadFragment extends BaseFragment {
         if (tabLayout != null) {
             tabLayout.setupWithViewPager(viewPager);
             Objects.requireNonNull(tabLayout.getTabAt(0)).setIcon(R.drawable.ic_menu_download);
-            Objects.requireNonNull(tabLayout.getTabAt(1)).setIcon(R.drawable.ic_menu_download);
+            Objects.requireNonNull(tabLayout.getTabAt(1)).setIcon(R.drawable.ic_menu_downloaded);
             Objects.requireNonNull(Objects.requireNonNull(tabLayout.getTabAt(1)).getIcon())
                     .setColorFilter(Color.parseColor("#88ffffff"), PorterDuff.Mode.SRC_IN);
             //noinspection deprecation

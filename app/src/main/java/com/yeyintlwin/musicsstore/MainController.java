@@ -5,6 +5,9 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.aspsine.multithreaddownload.DownloadConfiguration;
+import com.aspsine.multithreaddownload.DownloadManager;
+
 public class MainController extends Application {
     private static SharedPreferences preferences;
     private static SharedPreferences.Editor editor;
@@ -39,5 +42,13 @@ public class MainController extends Application {
         super.onCreate();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
+        initDownloader();
+    }
+
+    private void initDownloader() {
+        DownloadConfiguration downloadConfiguration = new DownloadConfiguration();
+        downloadConfiguration.setMaxThreadNum(10);
+        downloadConfiguration.setThreadNum(1);
+        DownloadManager.getInstance().init(this, downloadConfiguration);
     }
 }

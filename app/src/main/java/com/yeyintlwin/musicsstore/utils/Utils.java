@@ -9,6 +9,7 @@ import com.yeyintlwin.musicsstore.MainController;
 import com.yeyintlwin.musicsstore.R;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Utils {
@@ -30,6 +31,8 @@ public class Utils {
                 maxValue = arr[i];
         return maxValue;
     }
+
+    private static final DecimalFormat DF = new DecimalFormat("0.00");
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static ArrayList<String> getMp3Files(Context context) throws Exception {
@@ -73,5 +76,23 @@ public class Utils {
         }
 
         return text;
+    }
+
+    public static int min(int[] arr) {
+        int minValue = arr[0];
+        for (int i = 1; i < arr.length; i++)
+            if (arr[i] < minValue)
+                minValue = arr[i];
+        return minValue;
+    }
+
+    public static String getDownloadDir(Context context) {
+        File file = new File(Environment.getExternalStorageDirectory(), File.separator + context.getString(R.string.app_name));
+        if (!file.exists()) file.mkdirs();
+        return file.getPath();
+    }
+
+    public static String getDownloadPerSize(long finished, long total) {
+        return DF.format((float) finished / (1024 * 1024)) + "M/" + DF.format((float) total / (1024 * 1024)) + "M";
     }
 }
