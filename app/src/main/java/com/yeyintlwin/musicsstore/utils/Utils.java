@@ -87,6 +87,7 @@ public class Utils {
     }
 
     public static String getDownloadDir(Context context) {
+
         File file = new File(Environment.getExternalStorageDirectory(), File.separator + context.getString(R.string.app_name));
         if (!file.exists()) file.mkdirs();
         return file.getPath();

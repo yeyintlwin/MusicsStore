@@ -113,6 +113,7 @@ public class MusicInfo implements Serializable {
     }
 
     public int getProgress() {
+        if (getStatus() == STATUS_COMPLETE) return 100;
         return progress;
     }
 

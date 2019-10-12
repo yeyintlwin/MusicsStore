@@ -374,7 +374,9 @@ public class MusicsFragment extends BaseFragment {
                                 DownloadInfo downloadInfo = downloadManager.getDownloadInfo(link);
                                 if (downloadInfo != null) {
                                     musicInfo.setProgress(downloadInfo.getProgress());
-                                    musicInfo.setPerSize(Utils.getDownloadPerSize(downloadInfo.getFinished(), downloadInfo.getLength()));
+                                    musicInfo.setPerSize(Utils.getDownloadPerSize(
+                                            downloadInfo.getFinished(),
+                                            downloadInfo.getLength()));
                                 }
                                 musicInfoList.add(musicInfo);
                             }
@@ -430,7 +432,6 @@ public class MusicsFragment extends BaseFragment {
         super.onResume();
         Log.w("MusicFragment", "onResume()");
         downloadReceiverMusic = DownloadReceiverMusic.getInstance().setRecyclerView(recyclerView);
-        // downloadReceiverMusic = new DownloadReceiverMusic(recyclerView);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(DownloadCallBack.ACTION_DOWNLOAD_BROAD_CAST);
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getContext()))

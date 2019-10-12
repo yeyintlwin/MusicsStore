@@ -1,10 +1,15 @@
 package com.yeyintlwin.musicsstore.service.downloader;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -15,22 +20,23 @@ import com.aspsine.multithreaddownload.CallBack;
 import com.aspsine.multithreaddownload.DownloadException;
 import com.aspsine.multithreaddownload.DownloadManager;
 import com.yeyintlwin.musicsstore.R;
+import com.yeyintlwin.musicsstore.database.downloadqueue.DownloadDatabaseManager;
 import com.yeyintlwin.musicsstore.ui.fragment.music.entity.MusicInfo;
+import com.yeyintlwin.musicsstore.utils.PicassoCacheRecycle;
 import com.yeyintlwin.musicsstore.utils.Utils;
 
 import java.io.File;
+import java.io.IOException;
 
 public class DownloadCallBack implements CallBack {
 
     public static final String ACTION_DOWNLOAD_BROAD_CAST = "download_broad_cast";
-
+    private final String CHANNEL_ID = "MY_CHANNEL_1";
     private LocalBroadcastManager broadcastManager;
     private NotificationManagerCompat notificationManager;
     private NotificationCompat.Builder notificationBuilder;
-
     private MusicInfo mMusicInfo;
     private Context mContext;
-
     private long lastTime;
 
     DownloadCallBack(Context context, MusicInfo musicInfo) {
@@ -38,19 +44,49 @@ public class DownloadCallBack implements CallBack {
         this.mContext = context;
         notificationManager = NotificationManagerCompat.from(context);
         broadcastManager = LocalBroadcastManager.getInstance(context);
-        //noinspection deprecation
-        notificationBuilder = new NotificationCompat.Builder(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            makeNotificationChannel();
+        }
+
+        notificationBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void makeNotificationChannel() {
+        NotificationChannel channel = new NotificationChannel(
+                CHANNEL_ID,
+                "Download Notification Channel",
+                NotificationManager.IMPORTANCE_DEFAULT);
+        channel.setShowBadge(true); // set false to disable badges, Oreo exclusive
+
+        NotificationManager notificationManager =
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        assert notificationManager != null;
+        notificationManager.createNotificationChannel(channel);
     }
 
     @Override
     public void onStarted() {
-        notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.cover));
+
+        Bitmap bitmap = null;
+        try {
+            bitmap = PicassoCacheRecycle.with(mContext).getBitmap(mMusicInfo.getCover());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (bitmap == null) {
+            bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.cover);
+        }
         notificationBuilder
+                .setLargeIcon(bitmap)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(mMusicInfo.getTitle())
                 .setContentText("Init Download")
                 .setProgress(100, 0, true)
-                .setTicker("Start download " + mMusicInfo.getTitle());
+                .setTicker("Start download " + mMusicInfo.getTitle())
+                .setNumber(3);
         updateNotification(Integer.parseInt(mMusicInfo.getId()));
     }
 
@@ -109,6 +145,7 @@ public class DownloadCallBack implements CallBack {
 
             //Delete item data from downloader database
             DownloadManager.getInstance().delete(mMusicInfo.getLink());
+            DownloadDatabaseManager.getInstance(mContext).delMusic(mMusicInfo.getId());
         }
     }
 
@@ -157,6 +194,7 @@ public class DownloadCallBack implements CallBack {
     }
 
     private void updateNotification(int notificationId) {
+        assert notificationManager != null;
         notificationManager.notify(notificationId + 1000, notificationBuilder.build());
     }
 

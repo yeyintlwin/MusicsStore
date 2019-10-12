@@ -53,7 +53,8 @@ public class FinishFragment extends BaseFragment {
     }
 
     public static FinishFragment getInstance() {
-        if (finishFragment == null) finishFragment = new FinishFragment();
+        if (finishFragment == null)
+            finishFragment = new FinishFragment();
         return finishFragment;
     }
 

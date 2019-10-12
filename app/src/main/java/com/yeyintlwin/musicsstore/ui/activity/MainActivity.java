@@ -1,13 +1,17 @@
 package com.yeyintlwin.musicsstore.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -50,18 +54,17 @@ public class MainActivity extends BaseActivity
     public static final int ACTION_ALBUM = R.id.nav_album;
     public static final int ACTION_COUNTRY = R.id.nav_country;
 
+    private static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1010;
+    private static final String TAG = "MainActivity";
+
     private Stack<Fragment> fragmentStack;
     private MenuItem menuItemCarrier;
     private boolean isMenuItemSelected = false;
     private long back_press;
-
-
     private View stacksLayout;
     private RelativeLayout firstStack;
     private RelativeLayout secondStack;
-
     private TabLayout tabLayout;
-
     private View.OnClickListener sbSecondStackClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -72,7 +75,6 @@ public class MainActivity extends BaseActivity
     };
     private TextView firstStackText;
     private TextView secondStackText;
-
     private NavigationView navigationView;
 
     private void init() {
@@ -89,9 +91,49 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.v(TAG, "Storage permission is granted.");
+
+                } else {
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+                }
+                return;
+            }
+
+        }
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+
+            }
+        } else {
+            Log.v(TAG, "Permission has already been granted");
+        }
 
         init();
 

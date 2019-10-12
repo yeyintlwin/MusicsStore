@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
+import com.yeyintlwin.musicsstore.database.downloadqueue.DownloadDatabaseManager;
+import com.yeyintlwin.musicsstore.database.downloadqueue.entity.DownloadMusicInfo;
 import com.yeyintlwin.musicsstore.ui.fragment.music.entity.MusicInfo;
 
 public class DownloadServiceManager {
@@ -23,6 +25,16 @@ public class DownloadServiceManager {
     }
 
     public void startDownload(MusicInfo data) {
+        DownloadMusicInfo downloadMusicInfo = new DownloadMusicInfo();
+        downloadMusicInfo.setId(data.getId());
+        downloadMusicInfo.setTitle(data.getTitle());
+        downloadMusicInfo.setArtist(data.getArtist());
+        downloadMusicInfo.setGenre(data.getGenre());
+        downloadMusicInfo.setAlbum(data.getAlbum());
+        downloadMusicInfo.setCover(data.getCover());
+        downloadMusicInfo.setLink(data.getLink());
+        DownloadDatabaseManager.getInstance(mContext).addMusic(downloadMusicInfo);
+
         Intent intent = new Intent(mContext, DownloadService.class);
         intent.setAction(DownloadService.ACTION_DOWNLOAD);
         intent.putExtra(DownloadService.EXTRA_INFO, data);
