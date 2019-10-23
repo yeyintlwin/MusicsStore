@@ -2,9 +2,11 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
-        minSdkVersion 23
+        //applicationId "org.jaudiotagger"
+        minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

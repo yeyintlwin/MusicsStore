@@ -22,6 +22,7 @@ import com.aspsine.multithreaddownload.DownloadManager;
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.database.downloadqueue.DownloadDatabaseManager;
 import com.yeyintlwin.musicsstore.ui.fragment.music.entity.MusicInfo;
+import com.yeyintlwin.musicsstore.utils.AudioTagEditor;
 import com.yeyintlwin.musicsstore.utils.PicassoCacheRecycle;
 import com.yeyintlwin.musicsstore.utils.Utils;
 
@@ -116,6 +117,8 @@ public class DownloadCallBack implements CallBack {
         if (currentTimeMillis - lastTime > 500) {
             notificationBuilder.setContentText("Downloading");
             notificationBuilder.setProgress(100, progress, false);
+
+
             updateNotification(Integer.parseInt(mMusicInfo.getId()));
             sendBroadCast(mMusicInfo);
             lastTime = currentTimeMillis;
@@ -138,7 +141,12 @@ public class DownloadCallBack implements CallBack {
             File file2 = new File(file.getParent(), mMusicInfo.getTitle() + ".mp3");
             //noinspection ResultOfMethodCallIgnored
             file.renameTo(file2);
-            //AudioTag.getInstance(context).setAudioTag(file2, musicInfo);
+
+            try {
+                AudioTagEditor.getInstance(mContext).setTag(mMusicInfo).target(file2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             Toast.makeText(mContext, mMusicInfo.getTitle() + ".mp3 is download complete.", Toast.LENGTH_SHORT).show();
             ((Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(new long[]{0, 50, 100, 100, 100, 100}, -1);
