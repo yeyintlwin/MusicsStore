@@ -54,7 +54,7 @@ public class QueueFragment extends BaseFragment {
     private DotsTextView loadingDotsText;
 
     private QueueAdapter adapter;
-    private List<QueueInfo> infos;
+    private List<QueueInfo> infoList;
     private DownloadReceiverQueue downloadReceiverQueue;
 
     public QueueFragment() {
@@ -82,7 +82,7 @@ public class QueueFragment extends BaseFragment {
         emptyText.setText(Utils.fontStand(emptyText.getText().toString()));
         loadingText.setText(Utils.fontStand(loadingText.getText().toString()));
 
-        infos = new ArrayList<>();
+        infoList = new ArrayList<>();
         adapter = new QueueAdapter();
         recyclerView.setAdapter(adapter);
         return view;
@@ -102,7 +102,7 @@ public class QueueFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 viewControl(SHOW_LOADING);
-                infos.clear();
+                infoList.clear();
                 loadData();
             }
         });
@@ -185,9 +185,9 @@ public class QueueFragment extends BaseFragment {
                         downloadInfo.getFinished(),
                         downloadInfo.getLength()));
             }
-            infos.add(info);
+            infoList.add(info);
         }
-        adapter.setData(infos);
+        adapter.setData(infoList);
         adapter.notifyDataSetChanged();
     }
 
@@ -205,8 +205,8 @@ public class QueueFragment extends BaseFragment {
                 try {
                     int position = getItemPositionById(id);
                     Log.v("QueueFragment del", "position -> " + position);
-                    infos.remove(position);
-                    adapter.setData(infos);
+                    infoList.remove(position);
+                    adapter.setData(infoList);
                     adapter.notifyItemRemoved(position);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -217,8 +217,8 @@ public class QueueFragment extends BaseFragment {
     }
 
     private int getItemPositionById(String id) throws Exception {
-        for (int i = 0; i < infos.size(); i++) {
-            if (infos.get(i).getId().equals(id)) return i;
+        for (int i = 0; i < infoList.size(); i++) {
+            if (infoList.get(i).getId().equals(id)) return i;
         }
         throw new Exception("Position not found.");
     }
