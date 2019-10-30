@@ -67,7 +67,7 @@ public class Utils {
     }
 
     public static boolean isUnicode() {
-        return MainController.getBoolean(Constants.IS_UNICODE, true);
+        return MainController.Companion.getBoolean(Constants.IS_UNICODE, true);
     }
 
     public static String fontStand(String text) {

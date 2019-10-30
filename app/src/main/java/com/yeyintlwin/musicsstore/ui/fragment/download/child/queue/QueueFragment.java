@@ -162,14 +162,14 @@ public class QueueFragment extends BaseFragment {
 
     private void loadData() {
 
-        List<DownloadMusicInfo> downloadMusicInfos = DownloadDatabaseManager.getInstance(getContext()).getAllMusic();
-        if (downloadMusicInfos.size() == 0) {
+        List<DownloadMusicInfo> downloadMusicInfoList = DownloadDatabaseManager.getInstance(getContext()).getAllMusic();
+        if (downloadMusicInfoList.size() == 0) {
             viewControl(SHOW_EMPTY);
             return;
         }
 
         viewControl(SHOW_RECYCLER);
-        for (DownloadMusicInfo downloadMusicInfo : downloadMusicInfos) {
+        for (DownloadMusicInfo downloadMusicInfo : downloadMusicInfoList) {
             QueueInfo info = new QueueInfo();
             info.setId(downloadMusicInfo.getId());
             info.setTitle(downloadMusicInfo.getTitle());

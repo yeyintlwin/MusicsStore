@@ -42,7 +42,7 @@ public class SetupActivity extends BaseActivity implements OnClickListener {
         clickUnicode.setOnClickListener(this);
         clickZawgyi.setOnClickListener(this);
         setupComplete.setOnClickListener(this);
-        MainController.putBoolean(Constants.IS_UNICODE, true);
+        MainController.Companion.putBoolean(Constants.IS_UNICODE, true);
     }
 
     @Override
@@ -51,15 +51,15 @@ public class SetupActivity extends BaseActivity implements OnClickListener {
             case R.id.activity_setupClickArea1:
                 checkZawgyi.setImageBitmap(null);
                 checkUnicode.setImageResource(R.drawable.ic_action_tick_setup);
-                MainController.putBoolean(Constants.IS_UNICODE, true);
+                MainController.Companion.putBoolean(Constants.IS_UNICODE, true);
                 break;
             case R.id.activity_setupClickArea2:
                 checkUnicode.setImageBitmap(null);
                 checkZawgyi.setImageResource(R.drawable.ic_action_tick_setup);
-                MainController.putBoolean(Constants.IS_UNICODE, false);
+                MainController.Companion.putBoolean(Constants.IS_UNICODE, false);
                 break;
             case R.id.activity_setupat_markushi_ui_CircleButton:
-                MainController.putBoolean("isOneTime", true);
+                MainController.Companion.putBoolean("isOneTime", true);
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 overridePendingTransition(0, 0);

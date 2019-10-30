@@ -179,7 +179,7 @@ public class MusicsFragment extends BaseFragment {
                         requestFromLoadMore = true;
                         if (startPoint < 0) startPoint = 0;
                         startPoint = startPoint + Integer.parseInt(
-                                MainController.getString("loadMoreLimit", "20"));
+                                MainController.Companion.getString("loadMoreLimit", "20"));
                         loadData(searchQuery, startPoint);
                     }
 
@@ -386,7 +386,7 @@ public class MusicsFragment extends BaseFragment {
                         } catch (JSONException e) {
                             if (requestFromLoadMore)
                                 startPoint = firstItem - Integer.parseInt(
-                                        MainController.getString("loadMoreLimit", "20"));
+                                        MainController.Companion.getString("loadMoreLimit", "20"));
                             e.printStackTrace();
                         }
                         viewControl(Objects.requireNonNull(recyclerView.getLayoutManager())
@@ -400,7 +400,7 @@ public class MusicsFragment extends BaseFragment {
                 removeLoadMore();
                 if (requestFromLoadMore) {
                     startPoint = firstItem - Integer.parseInt(
-                            MainController.getString("loadMoreLimit", "20"));
+                            MainController.Companion.getString("loadMoreLimit", "20"));
                     viewControl(Objects.requireNonNull(recyclerView.getLayoutManager())
                             .getItemCount() == 0 ? SHOW_EMPTY : SHOW_RECYCLER);
                 } else {
@@ -413,7 +413,7 @@ public class MusicsFragment extends BaseFragment {
             protected Map<String, String> getParams() {
                 Map<String, String> hashMap = new HashMap<>();
                 hashMap.put("from", Integer.toString(firstItem));
-                hashMap.put("limit", MainController.getString("loadMoreLimit", "20"));
+                hashMap.put("limit", MainController.Companion.getString("loadMoreLimit", "20"));
                 hashMap.put("title", query);
 
                 if (isFromCategory(action)) {

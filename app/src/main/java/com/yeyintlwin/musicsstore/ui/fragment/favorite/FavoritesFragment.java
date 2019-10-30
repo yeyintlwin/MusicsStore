@@ -213,7 +213,7 @@ public class FavoritesFragment extends BaseFragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> hashMap = new HashMap<>();
-                hashMap.put("limit", MainController.getString("favoritesLimit", "20"));
+                hashMap.put("limit", MainController.Companion.getString("favoritesLimit", "20"));
                 return hashMap;
             }
         };
