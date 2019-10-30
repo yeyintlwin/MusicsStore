@@ -105,11 +105,11 @@ public class MusicInfo implements Serializable {
     }
 
     public int getStatus() {
-        return MainController.Companion.getInt("status_" + getId(), STATUS_NOT_DOWNLOAD);
+        return MainController.getInt("status_" + getId(), STATUS_NOT_DOWNLOAD);
     }
 
     public void setStatus(int status) {
-        MainController.Companion.putInt("status_" + getId(), status);
+        MainController.putInt("status_" + getId(), status);
     }
 
     public int getProgress() {

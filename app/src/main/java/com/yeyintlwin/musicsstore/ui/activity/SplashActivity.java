@@ -26,7 +26,7 @@ public class SplashActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Class aClass = MainController.Companion.getBoolean("isOneTime", false) ? MainActivity.class : SetupActivity.class;
+                Class aClass = MainController.getBoolean("isOneTime", false) ? MainActivity.class : SetupActivity.class;
                 Intent intent = new Intent(SplashActivity.this, aClass);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 overridePendingTransition(0, 0);
