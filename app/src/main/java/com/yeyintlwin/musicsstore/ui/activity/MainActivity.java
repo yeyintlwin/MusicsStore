@@ -132,7 +132,7 @@ public class MainActivity extends BaseActivity
 
             }
         } else {
-            Log.v(TAG, "Permission has already been granted");
+            Log.v(TAG, "Permission has already granted");
         }
 
         init();

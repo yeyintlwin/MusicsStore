@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +20,10 @@ import android.widget.LinearLayout;
 import com.yeyintlwin.musicsstore.R;
 import com.yeyintlwin.musicsstore.ui.fragment.base.BaseFragment;
 import com.yeyintlwin.musicsstore.ui.fragment.home.adapter.HomePagerAdapter;
+import com.yeyintlwin.musicsstore.ui.fragment.home.adapter.HomeRecyclerViewAdapter;
 import com.yeyintlwin.musicsstore.ui.fragment.home.entity.HomePagerInfo;
+import com.yeyintlwin.musicsstore.ui.fragment.home.entity.HomeRecyclerViewInfo;
+import com.yeyintlwin.musicsstore.ui.fragment.home.entity.HomeSectionListDataInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +37,11 @@ public class HomeFragment extends BaseFragment {
 
     ImageView[] dots;
     int currentPage = 0;
+    SwipeRefreshLayout swipeRefresh;
     private ViewPager viewPager;
     private LinearLayout slighterDotsPanel;
+    private RecyclerView recyclerView;
+
 
     public HomeFragment() {
 
@@ -54,14 +63,58 @@ public class HomeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         viewPager = view.findViewById(R.id.home_viewPager);
         slighterDotsPanel = view.findViewById(R.id.slighterDots);
+
+        recyclerView = view.findViewById(R.id.home_recyclerView);
+        swipeRefresh = view.findViewById(R.id.home_swipeRefresh);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(true);
+        recyclerView.setItemViewCacheSize(12);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefresh.setRefreshing(false);
+            }
+        });
         test();
+        test2();
     }
+
+    private void test2() {
+        HomeRecyclerViewAdapter recyclerViewAdapter = new HomeRecyclerViewAdapter(getContext());
+        List<HomeRecyclerViewInfo> sectionInfos = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            HomeRecyclerViewInfo sectionInfo = new HomeRecyclerViewInfo();
+            sectionInfo.setId(i + "");
+            sectionInfo.setSectionName("Section");
+
+            List<HomeSectionListDataInfo> itemInfos = new ArrayList<>();
+            for (int j = 0; j < 10; j++) {
+                HomeSectionListDataInfo itemInfo = new HomeSectionListDataInfo();
+                itemInfo.setId(j + "");
+                itemInfo.setName("Hello World");
+                //  itemInfo.setImageUrl("http://example.com/image/demo.png");
+                itemInfo.setImageUrl("http://192.168.43.139/android_api_v2.0/upload/exclusive_cover/pic" + (j + 1) + ".jpg");
+
+                itemInfos.add(itemInfo);
+            }
+            sectionInfo.setSectionListData(itemInfos);
+
+            sectionInfos.add(sectionInfo);
+        }
+
+        recyclerViewAdapter.setData(sectionInfos);
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+    }
+
 
     @SuppressWarnings("ConstantConditions")
     @SuppressLint("ClickableViewAccessibility")
@@ -74,13 +127,15 @@ public class HomeFragment extends BaseFragment {
         for (int i = 0; i < 10; i++) {
             HomePagerInfo info = new HomePagerInfo();
             info.setId(Integer.toString(i));
-            info.setUrl("http://192.168.43.139/android_api_v2.0/upload/exclusive_cover/pic" + (i + 1) + ".jpg");
+            info.setExclusiveCover("http://192.168.43.139/android_api_v2.0/upload/exclusive_cover/pic" + (i + 1) + ".jpg");
             infos.add(info);
         }
 
         pagerAdapter.setData(infos);
         viewPager.setAdapter(pagerAdapter);
 
+
+        //Dots indicators.
         final int dotsCount = pagerAdapter.getCount();
         dots = new ImageView[dotsCount];
 

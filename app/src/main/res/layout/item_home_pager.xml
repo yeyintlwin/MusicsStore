@@ -11,5 +11,4 @@
         android:src="@drawable/cover"
         tools:ignore="ContentDescription" />
 
-
 </LinearLayout>

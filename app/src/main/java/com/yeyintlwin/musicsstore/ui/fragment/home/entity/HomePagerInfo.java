@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class HomePagerInfo implements Serializable {
     private String id;
-    private String url;
+    private String exclusiveCover;
 
     public String getId() {
         return id;
@@ -14,11 +14,12 @@ public class HomePagerInfo implements Serializable {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
+    public String getExclusiveCover() {
+        return exclusiveCover;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setExclusiveCover(String exclusiveCover) {
+        this.exclusiveCover = exclusiveCover;
     }
+
 }

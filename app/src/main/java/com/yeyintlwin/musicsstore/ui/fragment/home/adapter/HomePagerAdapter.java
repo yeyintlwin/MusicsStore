@@ -3,6 +3,7 @@ package com.yeyintlwin.musicsstore.ui.fragment.home.adapter;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,15 +43,20 @@ public class HomePagerAdapter extends PagerAdapter {
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         LayoutInflater inflater = activity.getLayoutInflater();
         View view = inflater.inflate(R.layout.item_home_pager, container, false);
-        //TextView textView = view.findViewById(R.id.homePagerItemText);
-        //textView.setText(infos.get(position).getId());
 
         ImageView imageView = view.findViewById(R.id.exclusiveImageView);
-        Picasso.get().load(infos.get(position).getUrl()).centerCrop().fit().into(imageView);
+        Picasso.get().load(infos.get(position).getExclusiveCover()).centerCrop().fit().into(imageView);
 
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //System.out.printf();
+                Log.wtf("wtf", infos.get(position).getId());
+            }
+        });
         container.addView(view);
         return view;
     }
